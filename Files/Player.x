@@ -48,77 +48,29 @@
 - (BOOL)isWatermarkEnabled { return IS_ENABLED(HideWaterMark) ? NO : %orig; }
 - (void)setWatermarkEnabled:(BOOL)arg { IS_ENABLED(HideWaterMark) ? %orig(NO) : %orig; }
 - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
-/*
-- (void)layoutSubviews {
-    %orig;
-    if (IS_ENABLED(HideFullAction)) {
-        self.fullscreenActionsView.frame = CGRectZero;
-        self.fullscreenActionsView.bounds = CGRectZero;
-        self.fullscreenActionsView.hidden = YES;
-    }
-}
-*/
 %end
 
-/*
 %hook YTFullscreenActionsView
 - (void)layoutSubviews {
     if (IS_ENABLED(HideFullAction)) {
-        self.frame = CGRectZero;
-        self.bounds = CGRectZero;
+        self.bounds = CGRectMake(0, 0, 1, 1);
+        
+        // 2. Calculate the Bottom-Center position
+        UIView *parent = self.superview;
+        if (parent) {
+            CGFloat centerX = parent.bounds.size.width / 2;
+            // Place it at the bottom, offset by half its height
+            CGFloat centerY = parent.bounds.size.height - (boxHeight / 2);
+            self.center = CGPointMake(centerX, centerY);
+        }
+        
+        // 3. Make it "invisible" but physically there to satisfy layout logic
+        self.alpha = 0.01; 
         self.hidden = YES;
-        return; // Skip %orig to prevent YouTube from resetting the frame
+        
+        return; // Prevent %orig from moving it back
     }
     %orig;
-}
-%end
-*/
-
-%hook YTMainAppVideoPlayerOverlayView
-/*
-- (void)setFullscreenActionsView:(UIView *)view {
-    if (IS_ENABLED(HideFullAction)) {
-        %orig(nil); // Send 'nil' so the view is never added to the overlay
-    } else {
-        %orig;
-    }
-}
-*/
-- (void)updateFullscreenActionsVisibility:(BOOL)visible {
-    if (IS_ENABLED(HideFullAction)) {
-        %orig(NO); // Force it to stay hidden and collapsed
-    } else {
-        %orig;
-    }
-}
-%end
-
-%hook YTMainAppVideoPlayerOverlayViewController
-/*
-- (void)setFullscreenActionsView:(UIView *)view {
-    if (IS_ENABLED(HideFullAction)) {
-        %orig(nil); // Send 'nil' so the view is never added to the overlay
-    } else {
-        %orig;
-    }
-}
-*/
-- (void)updateFullscreenActionsVisibility:(BOOL)visible {
-    if (IS_ENABLED(HideFullAction)) {
-        %orig(NO); // Force it to stay hidden and collapsed
-    } else {
-        %orig;
-    }
-}
-%end
-
-%hook YTMainAppVideoPlayerOverlayView
-- (void)setFullscreenActionsAlpha:(double)alpha animated:(BOOL)animated {
-    if (IS_ENABLED(HideFullAction)) {
-        %orig(0.0, animated); // Always force alpha to 0
-    } else {
-        %orig;
-    }
 }
 %end
 
