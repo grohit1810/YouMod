@@ -605,6 +605,16 @@ static BOOL isDarkMode(UIView *view) {
 - (void)setNextButtonHidden:(BOOL)arg { IS_ENABLED(HideNextButton) ? %orig(YES) : %orig; }
 // Hide video title in full screen
 - (BOOL)titleViewHidden { return IS_ENABLED(HideFullvidTitle) ? YES : %orig; }
+- (void)layoutSubviews {
+    %orig;
+    // Loop through all subviews to find their identifiers
+    for (UIView *subview in self.subviews) {
+        if (subview.accessibilityIdentifier) {
+            NSLog(@"[YouMod] YTMainAppControlsOverlayView Found ID: %@", subview.accessibilityIdentifier);
+        }
+    }
+}
+%end
 %end
 
 %hook YTAutonavEndscreenController
@@ -704,14 +714,6 @@ static BOOL isDarkMode(UIView *view) {
             playerBar.shouldDisplayTimeRemaining = YES;
         }
     }
-}
-%end
-
-// Disable Fullscreen Actions
-%hook YTFullscreenActionsView
-- (void)layoutSubviews {
-    %orig;
-    if (IS_ENABLED(HideFullAction)) self.hidden = YES;
 }
 %end
 

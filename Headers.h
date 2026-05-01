@@ -12,6 +12,7 @@
 #import <YouTubeHeader/YTPivotBarItemView.h>
 #import <YouTubeHeader/YTActionSheetAction.h>
 #import <YouTubeHeader/YTIMenuItemSupportedRenderers.h>
+#import <YouTubeHeader/YTMainAppControlsOverlayView.h>
 #import <YouTubeHeader/YTMainAppVideoPlayerOverlayView.h>
 #import <YouTubeHeader/YTMainAppVideoPlayerOverlayViewController.h>
 #import <YouTubeHeader/YTVideoQualitySwitchOriginalController.h>
@@ -216,10 +217,6 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 - (void)exportYouModSettingsFromVC:(UIViewController *)vc;
 - (void)importYouModSettingsFromVC:(UIViewController *)vc;
 - (void)restoreYouModDefaults;
-@end
-
-// Hide fullscreen buttons
-@interface YTFullscreenActionsView : UIView
 @end
 
 // Player Gestures - @bhackel (YTLitePlus)
