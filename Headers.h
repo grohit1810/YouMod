@@ -160,6 +160,12 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @interface YTChipCloudCell : UICollectionViewCell
 @end
 
+@interface YTFullscreenActionsView : UIView
+@end
+
+@interface YTFullScreenOverlayView : UIView
+@end
+
 @interface YTSearchViewController : UIViewController
 @end
 

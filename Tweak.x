@@ -605,12 +605,27 @@ static BOOL isDarkMode(UIView *view) {
 - (void)setNextButtonHidden:(BOOL)arg { IS_ENABLED(HideNextButton) ? %orig(YES) : %orig; }
 // Hide video title in full screen
 - (BOOL)titleViewHidden { return IS_ENABLED(HideFullvidTitle) ? YES : %orig; }
+%end
+
+%hook YTFullscreenActionsView
 - (void)layoutSubviews {
     %orig;
     // Loop through all subviews to find their identifiers
     for (UIView *subview in self.subviews) {
         if (subview.accessibilityIdentifier) {
-            NSLog(@"[YouMod] YTMainAppControlsOverlayView Found ID: %@", subview.accessibilityIdentifier);
+            NSLog(@"[YouMod] YTFullscreenActionsView Found ID: %@", subview.accessibilityIdentifier);
+        }
+    }
+}
+%end
+
+%hook YTFullScreenOverlayView
+- (void)layoutSubviews {
+    %orig;
+    // Loop through all subviews to find their identifiers
+    for (UIView *subview in self.subviews) {
+        if (subview.accessibilityIdentifier) {
+            NSLog(@"[YouMod] YTFullScreenOverlayView Found ID: %@", subview.accessibilityIdentifier);
         }
     }
 }
@@ -646,6 +661,12 @@ static BOOL isDarkMode(UIView *view) {
 // - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
 - (void)layoutSubviews {
     %orig;
+    // Loop through all subviews to find their identifiers
+    for (UIView *subview in self.subviews) {
+        if (subview.accessibilityIdentifier) {
+            NSLog(@"[YouMod] YTMainAppVideoPlayerOverlayView Found ID: %@", subview.accessibilityIdentifier);
+        }
+    }
     if (IS_ENABLED(HideCastButtonPlayer)) self.playbackRouteButton.hidden = YES;    
 }
 %end
