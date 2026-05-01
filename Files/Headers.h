@@ -244,3 +244,6 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @property (nonatomic, strong, readwrite) YTFineScrubberFilmstripView *fineScrubberFilmstrip;
 - (CGFloat)scrubXForScrubRange:(CGFloat)scrubRange;
 @end
+
+@interface YTReelPlayerButton : YTQTMButton
+@end
