@@ -51,13 +51,11 @@
 %end
 
 %hook YTFullscreenActionsView
-- (void)layoutSubviews {
-    %orig;
+- (CGSize)sizeThatFits:(CGSize)size {
     if (IS_ENABLED(HideFullAction)) {
-        self.bounds = CGRectZero;
-        self.frame = CGRectZero; 
-        self.hidden = YES;
+        return CGSizeZero; // Force the container to have NO height/width
     }
+    return %orig;
 }
 %end
 
