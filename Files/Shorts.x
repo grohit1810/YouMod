@@ -35,7 +35,7 @@
 - (BOOL)enablePlayerBarForVerticalVideoWhenControlsHiddenInFullscreen { return IS_ENABLED(ShowShortsSeekbar) ? YES : %orig; }
 %end
 
-%hook YTReelPlayerButton
+%hook YTReelWatchPlaybackOverlayView
 - (void)layoutSubviews {
     %orig;
     for (UIView *view in self.subviews) {
