@@ -719,8 +719,6 @@ static BOOL isDarkMode(UIView *view) {
 %end
 */
 
-YTMainAppVideoPlayerOverlayViewController
-
 // Disable Autoplay 
 %hook YTPlaybackConfig
 - (void)setStartPlayback:(BOOL)arg1 { IS_ENABLED(StopAutoplayVideo) ? %orig(NO) : %orig; }
