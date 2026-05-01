@@ -48,6 +48,7 @@
 - (BOOL)isWatermarkEnabled { return IS_ENABLED(HideWaterMark) ? NO : %orig; }
 - (void)setWatermarkEnabled:(BOOL)arg { IS_ENABLED(HideWaterMark) ? %orig(NO) : %orig; }
 - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
+/*
 - (void)layoutSubviews {
     %orig;
     if (IS_ENABLED(HideFullAction)) {
@@ -55,6 +56,19 @@
         self.fullscreenActionsView.bounds = CGRectZero;
         self.fullscreenActionsView.hidden = YES;
     }
+}
+*/
+%end
+
+%hook YTFullscreenActionsView
+- (void)layoutSubviews {
+    if (IS_ENABLED(HideFullAction)) {
+        self.frame = CGRectZero;
+        self.bounds = CGRectZero;
+        self.hidden = YES;
+        return; // Skip %orig to prevent YouTube from resetting the frame
+    }
+    %orig;
 }
 %end
 
