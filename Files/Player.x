@@ -112,7 +112,6 @@
 }
 %end
 
-/*
 %hook YTMainAppVideoPlayerOverlayView
 - (void)setFullscreenActionsAlpha:(double)alpha animated:(BOOL)animated {
     if (IS_ENABLED(HideFullAction)) {
@@ -122,7 +121,6 @@
     }
 }
 %end
-*/
 
 // No Endscreen Cards
 %hook YTCreatorEndscreenView
