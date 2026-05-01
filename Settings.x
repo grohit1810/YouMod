@@ -59,7 +59,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
         titleDescription:nil \
         accessibilityIdentifier:nil \
         detailTextBlock:nil \
-        switchBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) { \
+        selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) { \
             return NO; \
         }]
 
@@ -414,7 +414,6 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
     // Perferences
     YTSettingsSectionItem *perfgroup = [YTSettingsSectionItemClass itemWithTitle:LOC(@"PERFER_HEADER") accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
         NSArray <YTSettingsSectionItem *> *rows = @[
-            GHOST_SWITCH,
             [YTSettingsSectionItemClass itemWithTitle:nil
                 titleDescription:LOC(@"PERFER")
                 accessibilityIdentifier:nil
