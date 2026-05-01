@@ -245,5 +245,5 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 - (CGFloat)scrubXForScrubRange:(CGFloat)scrubRange;
 @end
 
-@interface YTReelPlayerButton : YTQTMButton
+@interface YTReelWatchPlaybackOverlayView : UIView
 @end
