@@ -52,27 +52,12 @@
 
 %hook YTFullscreenActionsView
 - (void)layoutSubviews {
-    if (IS_ENABLED(HideFullAction)) {
-        CGFloat boxWidth = 1.0;
-        CGFloat boxHeight = 1.0;
-        self.bounds = CGRectMake(0, 0, boxWidth, boxHeight);
-        
-        // 2. Calculate the Bottom-Center position
-        UIView *parent = self.superview;
-        if (parent) {
-            CGFloat centerX = parent.bounds.size.width / 2;
-            // Place it at the bottom, offset by half its height
-            CGFloat centerY = parent.bounds.size.height - (boxHeight / 2);
-            self.center = CGPointMake(centerX, centerY);
-        }
-        
-        // 3. Make it "invisible" but physically there to satisfy layout logic
-        self.alpha = 0.01; 
-        self.hidden = YES;
-        
-        return; // Prevent %orig from moving it back
-    }
     %orig;
+    if (IS_ENABLED(HideFullAction)) {
+        self.bounds = CGRectZero;
+        self.frame = CGRectZero; 
+        self.hidden = YES;
+    }
 }
 %end
 
