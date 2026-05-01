@@ -63,17 +63,32 @@
 %hook YTFullscreenActionsView
 - (void)layoutSubviews {
     if (IS_ENABLED(HideFullAction)) {
-        // Set hidden first
+        self.frame = CGRectZero;
+        self.bounds = CGRectZero;
         self.hidden = YES;
-        
-        // Only set frame to zero if it isn't already zero
-        // This prevents the "Infinite Layout Loop"
-        if (!CGRectEqualToRect(self.frame, CGRectZero)) {
-            self.frame = CGRectZero;
-        }
-        return; // Stop here so %orig doesn't fight you
+        return; // Skip %orig to prevent YouTube from resetting the frame
     }
-    %orig; // Only runs if the tweak is OFF
+    %orig;
+}
+%end
+
+%hook YTMainAppVideoPlayerOverlayView
+- (void)setFullscreenActionsView:(UIView *)view {
+    if (IS_ENABLED(HideFullAction)) {
+        %orig(nil); // Send 'nil' so the view is never added to the overlay
+    } else {
+        %orig;
+    }
+}
+%end
+
+%hook YTMainAppVideoPlayerOverlayView
+- (void)setFullscreenActionsAlpha:(double)alpha animated:(BOOL)animated {
+    if (IS_ENABLED(HideFullAction)) {
+        %orig(0.0, animated); // Always force alpha to 0
+    } else {
+        %orig;
+    }
 }
 %end
 
