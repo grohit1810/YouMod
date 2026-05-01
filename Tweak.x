@@ -562,7 +562,7 @@ static BOOL isDarkMode(UIView *view) {
 %hook YTCinematicContainerView
 - (void)layoutSubviews {}
 - (void)loadWithModel:(id)arg {}
-- (id)initWithFrame:(CGRect)arg {}
+- (id)initWithFrame:(CGRect)arg { return nil; }
 %end
 
 %hook YTIElementRenderer
