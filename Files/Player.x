@@ -60,6 +60,7 @@
 */
 %end
 
+/*
 %hook YTFullscreenActionsView
 - (void)layoutSubviews {
     if (IS_ENABLED(HideFullAction)) {
@@ -71,11 +72,40 @@
     %orig;
 }
 %end
+*/
 
 %hook YTMainAppVideoPlayerOverlayView
+/*
 - (void)setFullscreenActionsView:(UIView *)view {
     if (IS_ENABLED(HideFullAction)) {
         %orig(nil); // Send 'nil' so the view is never added to the overlay
+    } else {
+        %orig;
+    }
+}
+*/
+- (void)updateFullscreenActionsVisibility:(BOOL)visible {
+    if (IS_ENABLED(HideFullAction)) {
+        %orig(NO); // Force it to stay hidden and collapsed
+    } else {
+        %orig;
+    }
+}
+%end
+
+%hook YTMainAppVideoPlayerOverlayViewController
+/*
+- (void)setFullscreenActionsView:(UIView *)view {
+    if (IS_ENABLED(HideFullAction)) {
+        %orig(nil); // Send 'nil' so the view is never added to the overlay
+    } else {
+        %orig;
+    }
+}
+*/
+- (void)updateFullscreenActionsVisibility:(BOOL)visible {
+    if (IS_ENABLED(HideFullAction)) {
+        %orig(NO); // Force it to stay hidden and collapsed
     } else {
         %orig;
     }
