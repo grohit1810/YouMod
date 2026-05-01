@@ -12,6 +12,7 @@
 #import <YouTubeHeader/YTPivotBarItemView.h>
 #import <YouTubeHeader/YTActionSheetAction.h>
 #import <YouTubeHeader/YTIMenuItemSupportedRenderers.h>
+#import <YouTubeHeader/YTMainAppVideoPlayerOverlayView.h>
 #import <YouTubeHeader/YTMainAppVideoPlayerOverlayViewController.h>
 #import <YouTubeHeader/YTVideoQualitySwitchOriginalController.h>
 #import <YouTubeHeader/YTVideoQualitySwitchRedesignedController.h>
@@ -236,6 +237,10 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 
 @interface YTMainAppVideoPlayerOverlayViewController (YouMod)
 @property (nonatomic, strong, readwrite) YTPlayerBarController *playerBarController;
+@end
+
+@interface YTMainAppVideoPlayerOverlayView (YouMod)
+@property (nonatomic, strong) YTQTMButton *playbackRouteButton;
 @end
 
 @interface YTInlinePlayerBarContainerView (YouMod)

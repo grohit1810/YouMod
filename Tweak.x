@@ -559,6 +559,12 @@ static BOOL isDarkMode(UIView *view) {
 }
 %end
 
+%hook YTCinematicContainerView
+- (void)layoutSubviews {}
+- (void)loadWithModel:(id)arg {}
+- (id)initWithFrame:(CGRect)arg {}
+%end
+
 %hook YTIElementRenderer
 - (NSData *)elementData {
     NSString *description = [self description];
@@ -594,7 +600,7 @@ static BOOL isDarkMode(UIView *view) {
 // Hide captions Button
 - (void)setClosedCaptionsOrSubtitlesButtonAvailable:(BOOL)arg1 { if (!IS_ENABLED(HideCaptionsButton)) %orig; }
 // Hide cast button
-- (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
+// - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
 - (void)setPreviousButtonHidden:(BOOL)arg { IS_ENABLED(HidePrevButton) ? %orig(YES) : %orig; }
 - (void)setNextButtonHidden:(BOOL)arg { IS_ENABLED(HideNextButton) ? %orig(YES) : %orig; }
 // Hide video title in full screen
@@ -628,7 +634,11 @@ static BOOL isDarkMode(UIView *view) {
 // Hide Watermarks
 - (BOOL)isWatermarkEnabled { return IS_ENABLED(HideWaterMark) ? NO : %orig; }
 - (void)setWatermarkEnabled:(BOOL)arg { IS_ENABLED(HideWaterMark) ? %orig(NO) : %orig; }
-- (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
+// - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
+- (void)layoutSubviews {
+    %orig;
+    if (IS_ENABLED(HideCastButtonPlayer)) self.playbackRouteButton.hidden = YES;    
+}
 %end
 
 // No Endscreen Cards
