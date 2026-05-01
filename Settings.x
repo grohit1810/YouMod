@@ -55,14 +55,13 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
 
 // Ghost switch
 #define GHOST_SWITCH \
-    [YTSettingsSectionItemClass switchItemWithTitle:nil \
+    [YTSettingsSectionItemClass itemWithTitle:nil \
         titleDescription:nil \
         accessibilityIdentifier:nil \
         detailTextBlock:nil \
-        switchBlock:^BOOL (YTSettingsCell *cell, BOOL enabled) { \
+        switchBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) { \
             return NO; \
-        } \
-        settingItemId:0]
+        }]
 
 %hook YTSettingsGroupData
 
