@@ -48,10 +48,12 @@
 - (BOOL)isWatermarkEnabled { return IS_ENABLED(HideWaterMark) ? NO : %orig; }
 - (void)setWatermarkEnabled:(BOOL)arg { IS_ENABLED(HideWaterMark) ? %orig(NO) : %orig; }
 - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
+/*
 - (void)layoutSubviews {
     %orig;
     if (IS_ENABLED(HideFullAction)) self.fullscreenActionsView.hidden = YES;
 }
+*/
 %end
 
 // No Endscreen Cards
@@ -66,6 +68,7 @@
 - (BOOL)allowDoubleTapToSeekGestureRecognizer { return IS_ENABLED(DisablesDoubleTap) ? NO : %orig; }
 // Disable long hold
 - (BOOL)allowLongPressGestureRecognizerInView:(id)arg { return IS_ENABLED(DisablesLongHold) ? NO : %orig; }
+- (id)fullscreenQuickActionsRendererForPlayerOverlayRenderer:(id)arg { return IS_ENABLED(HideFullAction) ? nil : %orig; }
 %end
 
 // YTNoPaidPromo (https://github.com/PoomSmart/YTNoPaidPromo)
