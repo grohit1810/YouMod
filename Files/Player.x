@@ -53,7 +53,9 @@
 %hook YTFullscreenActionsView
 - (void)layoutSubviews {
     if (IS_ENABLED(HideFullAction)) {
-        self.bounds = CGRectMake(0, 0, 1, 1);
+        CGFloat boxWidth = 1.0;
+        CGFloat boxHeight = 1.0;
+        self.bounds = CGRectMake(0, 0, boxWidth, boxHeight);
         
         // 2. Calculate the Bottom-Center position
         UIView *parent = self.superview;
