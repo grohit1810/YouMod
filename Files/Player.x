@@ -53,7 +53,7 @@
 %hook YTFullscreenActionsView
 - (CGSize)sizeThatFits:(CGSize)size {
     if (IS_ENABLED(HideFullAction)) {
-        return CGSizeMake(1, 2); // Force the container to have NO height/width
+        return CGSizeMake(1, 10); // Force the container to have NO height/width
     }
     return %orig;
 }
