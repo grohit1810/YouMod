@@ -38,7 +38,7 @@
 %hook YTReelPlayerButton
 - (void)layoutSubviews {
     %orig;
-    for (UIView *view in view.subviews) {
+    for (UIView *view in self.subviews) {
         if (IS_ENABLED(HideShortsLikeButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_like_button"]) view.hidden = YES;
         if (IS_ENABLED(HideShortsDisLikeButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_dislike_button"]) view.hidden = YES;
         if (IS_ENABLED(HideShortsCommentButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_comment_button"]) view.hidden = YES;
