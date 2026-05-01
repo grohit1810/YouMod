@@ -35,12 +35,12 @@
 - (BOOL)enablePlayerBarForVerticalVideoWhenControlsHiddenInFullscreen { return IS_ENABLED(ShowShortsSeekbar) ? YES : %orig; }
 %end
 
-%hook YTReelWatchPlaybackOverlayView
+%hook YTReelElementComponentView
 - (void)layoutSubviews {
     %orig;
-    if (self.accessibilityIdentifier) NSLog(@"[YouMod] YTReelWatchPlaybackOverlayView-layoutSubviews Found ID: %@", self.accessibilityIdentifier);
+    if (self.accessibilityIdentifier) NSLog(@"[YouMod] YTReelElementComponentView-layoutSubviews Found ID: %@", self.accessibilityIdentifier);
     for (UIView *view in self.subviews) {
-        if (view.accessibilityIdentifier) NSLog(@"[YouMod] YTReelWatchPlaybackOverlayView-layoutSubviews Found ID: %@", view.accessibilityIdentifier);
+        if (view.accessibilityIdentifier) NSLog(@"[YouMod] YTReelElementComponentView-layoutSubviews Found ID: %@", view.accessibilityIdentifier);
         if (IS_ENABLED(HideShortsLikeButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_like_button"]) view.hidden = YES;
         if (IS_ENABLED(HideShortsDisLikeButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_dislike_button"]) view.hidden = YES;
         if (IS_ENABLED(HideShortsCommentButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_comment_button"]) view.hidden = YES;
@@ -49,6 +49,7 @@
         if (IS_ENABLED(HideShortsMetaButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_pivot_button"]) view.hidden = YES;
     }
 }
+/*
 - (void)layoutActionBar {
     %orig;
     if (self.accessibilityIdentifier) NSLog(@"[YouMod] YTReelWatchPlaybackOverlayView-layoutActionBar Found ID: %@", self.accessibilityIdentifier);
@@ -62,4 +63,5 @@
         if (IS_ENABLED(HideShortsMetaButton) && [view.accessibilityIdentifier isEqualToString:@"id.reel_pivot_button"]) view.hidden = YES;
     }
 }
+*/
 %end
