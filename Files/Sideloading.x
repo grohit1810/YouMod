@@ -37,12 +37,6 @@ static NSString *accessGroupID() {
     if (IS_ENABLED(HideClipButton) && [self.accessibilityIdentifier isEqualToString:@"clip_button.eml"]) self.hidden = YES;
     if (IS_ENABLED(HideRemixButton) && [self.accessibilityIdentifier isEqualToString:@"id.video.remix.button"]) self.hidden = YES;
     if (IS_ENABLED(HideSaveButton) && [self.accessibilityIdentifier isEqualToString:@"id.video.add_to.button"]) self.hidden = YES;
-    if (IS_ENABLED(HideShortsLikeButton) && [self.accessibilityIdentifier isEqualToString:@"id.reel_like_button"]) self.hidden = YES;
-    if (IS_ENABLED(HideShortsDisLikeButton) && [self.accessibilityIdentifier isEqualToString:@"id.reel_dislike_button"]) self.hidden = YES;
-    if (IS_ENABLED(HideShortsCommentButton) && [self.accessibilityIdentifier isEqualToString:@"id.reel_comment_button"]) self.hidden = YES;
-    if (IS_ENABLED(HideShortsShareButton) && [self.accessibilityIdentifier isEqualToString:@"id.reel_share_button"]) self.hidden = YES;
-    if (IS_ENABLED(HideShortsRemixButton) && [self.accessibilityIdentifier isEqualToString:@"id.reel_remix_button"]) self.hidden = YES;
-    if (IS_ENABLED(HideShortsMetaButton) && [self.accessibilityIdentifier isEqualToString:@"id.reel_pivot_button"]) self.hidden = YES;
     if (IS_ENABLED(HideShortsProducts) && [self.accessibilityIdentifier isEqualToString:@"product_sticker.main_target"]) self.hidden = YES;
     if (IS_ENABLED(HideShortsProducts) && [self.accessibilityIdentifier isEqualToString:@"product_sticker.secondary_target"]) self.hidden = YES;
     if (IS_ENABLED(HideShortsRecbar) && [self.accessibilityIdentifier isEqualToString:@"id.elements.components.suggested_action"]) self.hidden = YES;
