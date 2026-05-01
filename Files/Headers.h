@@ -12,6 +12,7 @@
 #import <YouTubeHeader/YTPivotBarItemView.h>
 #import <YouTubeHeader/YTActionSheetAction.h>
 #import <YouTubeHeader/YTIMenuItemSupportedRenderers.h>
+#import <YouTubeHeader/YTMainAppVideoPlayerOverlayView.h>
 #import <YouTubeHeader/YTMainAppVideoPlayerOverlayViewController.h>
 #import <YouTubeHeader/YTVideoQualitySwitchOriginalController.h>
 #import <YouTubeHeader/YTVideoQualitySwitchRedesignedController.h>
@@ -243,4 +244,11 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @property UIPanGestureRecognizer *scrubGestureRecognizer;
 @property (nonatomic, strong, readwrite) YTFineScrubberFilmstripView *fineScrubberFilmstrip;
 - (CGFloat)scrubXForScrubRange:(CGFloat)scrubRange;
+@end
+
+@interface YTFullscreenActionsView : UIView
+@end
+
+@interface YTMainAppVideoPlayerOverlayView (YouMod)
+@property (nonatomic, strong, readwrite) YTFullscreenActionsView *fullscreenActionsView;
 @end

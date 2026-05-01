@@ -48,6 +48,10 @@
 - (BOOL)isWatermarkEnabled { return IS_ENABLED(HideWaterMark) ? NO : %orig; }
 - (void)setWatermarkEnabled:(BOOL)arg { IS_ENABLED(HideWaterMark) ? %orig(NO) : %orig; }
 - (id)playbackRouteButton { return IS_ENABLED(HideCastButtonPlayer) ? nil : %orig; }
+- (void)layoutSubviews {
+    %orig;
+    if (IS_ENABLED(HideFullAction)) self.fullscreenActionsView.hidden = YES;
+}
 %end
 
 // No Endscreen Cards
@@ -114,12 +118,6 @@
         }
     }
 }
-%end
-
-// Disable Fullscreen Actions
-%hook YTFullscreenActionsView
-- (BOOL)enabled { return IS_ENABLED(HideFullAction) ? NO : %orig; }
-- (void)setEnabled:(BOOL)arg1 { IS_ENABLED(HideFullAction) ? %orig(NO) : %orig; }
 %end
 
 // Disable Autoplay 
