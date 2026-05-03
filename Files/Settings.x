@@ -439,16 +439,6 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
     playergroup.settingIcon = icon3;
     [sectionItems addObject:playergroup];
 
-    // Section: SponsorBlock
-    YTSettingsSectionItem *sponsorblockgroup = [YTSettingsSectionItemClass itemWithTitle:@"SponsorBlock" accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
-        [self updateSponsorBlockSectionWithEntry:entry];
-        return YES;
-    }];
-    YTIIcon *iconSB = [%c(YTIIcon) new];
-    iconSB.iconType = 530;
-    sponsorblockgroup.settingIcon = iconSB;
-    [sectionItems addObject:sponsorblockgroup];
-
     // Section 5
     // Shorts
     YTSettingsSectionItem *shortsgroup = [YTSettingsSectionItemClass itemWithTitle:LOC(@"SHORTS") accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
@@ -568,6 +558,16 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
     icon6.iconType = 1101;
     othergroup.settingIcon = icon6;
     [sectionItems addObject:othergroup];
+
+    // Section: SponsorBlock
+    YTSettingsSectionItem *sponsorblockgroup = [YTSettingsSectionItemClass itemWithTitle:@"SponsorBlock" accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
+        [self updateSponsorBlockSectionWithEntry:entry];
+        return YES;
+    }];
+    YTIIcon *iconSB = [%c(YTIIcon) new];
+    iconSB.iconType = 610;
+    sponsorblockgroup.settingIcon = iconSB;
+    [sectionItems addObject:sponsorblockgroup];
 
     // Section 8
     // Perferences
