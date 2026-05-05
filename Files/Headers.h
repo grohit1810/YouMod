@@ -332,9 +332,15 @@ typedef NS_ENUM(NSInteger, SBSegmentAction) {
 @interface SBSkipNotificationView : UIView
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) UIButton *actionButton;
+@property (nonatomic, strong) UIView *progressOverlay;
 @property (nonatomic, copy) void (^onAction)(void);
+@property (nonatomic, assign) NSTimeInterval totalDuration;
+@property (nonatomic, assign) NSTimeInterval remainingDuration;
+@property (nonatomic, assign) BOOL isPaused;
 + (instancetype)showInView:(UIView *)parentView message:(NSString *)message buttonTitle:(NSString *)buttonTitle action:(void (^)(void))action duration:(NSTimeInterval)duration;
 - (void)dismiss;
+- (void)pauseProgress;
+- (void)resumeProgress;
 @end
 
 @interface YTPlayerViewController (SponsorBlock)

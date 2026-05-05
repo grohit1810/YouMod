@@ -1,6 +1,23 @@
 #import "Headers.h"
 #import <AudioToolbox/AudioToolbox.h>
 
+static UIWindow *sbGetKeyWindow(void) {
+    for (UIWindowScene *scene in [UIApplication sharedApplication].connectedScenes) {
+        if (scene.activationState == UISceneActivationStateForegroundActive) {
+            for (UIWindow *window in scene.windows) {
+                if (window.isKeyWindow) return window;
+            }
+        }
+    }
+    // Fallback: any connected scene's key window
+    for (UIWindowScene *scene in [UIApplication sharedApplication].connectedScenes) {
+        for (UIWindow *window in scene.windows) {
+            if (window.isKeyWindow) return window;
+        }
+    }
+    return nil;
+}
+
 static NSMutableDictionary<NSString *, NSArray<SBSegment *> *> *sbSegmentCache;
 
 static NSArray<NSString *> *sbAllCategories() {
@@ -283,7 +300,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (!strongSelf) return;
-            UIView *parentView = strongSelf.playerView;
+            UIView *parentView = sbGetKeyWindow();
             strongSelf.sbNotificationView = [SBSkipNotificationView showInView:parentView
                 message:message
                 buttonTitle:unskipTitle
@@ -307,7 +324,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
     float alertDuration = FLOAT_FOR_KEY(SBSkipAlertDuration);
     if (alertDuration <= 0) alertDuration = 5.0;
 
-    UIView *parentView = self.playerView;
+    UIView *parentView = sbGetKeyWindow();
     __weak typeof(self) weakSelf = self;
     self.sbNotificationView = [SBSkipNotificationView showInView:parentView
         message:message
@@ -326,7 +343,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
             NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
             NSString *message = [bundle localizedStringForKey:@"SB_JUMP_TO_HIGHLIGHT" value:@"Highlight available. Jump to the point?" table:nil];
             NSString *skipTitle = [bundle localizedStringForKey:@"SB_SKIP_NOW" value:@"Skip" table:nil];
-            UIView *parentView = self.playerView;
+            UIView *parentView = sbGetKeyWindow();
             self.sbNotificationView = [SBSkipNotificationView showInView:parentView
                 message:message
                 buttonTitle:skipTitle
@@ -346,7 +363,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
             if (IS_ENABLED(SBShowNotifications)) {
                 NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
                 NSString *message = [bundle localizedStringForKey:@"SB_JUMPED_TO_HIGHLIGHT" value:@"Jumped to highlight" table:nil];
-                self.sbNotificationView = [SBSkipNotificationView showInView:self.playerView
+                self.sbNotificationView = [SBSkipNotificationView showInView:sbGetKeyWindow()
                     message:message
                     buttonTitle:nil
                     action:nil

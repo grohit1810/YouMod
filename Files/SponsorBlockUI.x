@@ -8,7 +8,6 @@
 + (instancetype)showInView:(UIView *)parentView message:(NSString *)message buttonTitle:(NSString *)buttonTitle action:(void (^)(void))action duration:(NSTimeInterval)duration {
     if (!parentView) return nil;
 
-    // Remove any existing notification in this parent
     for (UIView *sub in [parentView.subviews copy]) {
         if ([sub isKindOfClass:[SBSkipNotificationView class]]) {
             [(SBSkipNotificationView *)sub dismiss];
@@ -17,23 +16,32 @@
 
     SBSkipNotificationView *view = [[SBSkipNotificationView alloc] initWithFrame:CGRectZero];
     view.translatesAutoresizingMaskIntoConstraints = NO;
-    view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.85];
-    view.layer.cornerRadius = 12.0;
-    view.clipsToBounds = NO;
+    view.clipsToBounds = YES;
+    view.layer.cornerRadius = 22.0;
     view.onAction = action;
+    view.totalDuration = duration;
+    view.remainingDuration = duration;
+    view.isPaused = NO;
 
-    // Shadow
-    view.layer.shadowColor = [UIColor blackColor].CGColor;
-    view.layer.shadowOffset = CGSizeMake(0, 2);
-    view.layer.shadowRadius = 8.0;
-    view.layer.shadowOpacity = 0.4;
+    // Base layer (lighter — revealed as progress depletes)
+    view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.45];
+
+    // Progress overlay (darker — shrinks from right to left)
+    UIView *progressOverlay = [[UIView alloc] initWithFrame:CGRectZero];
+    progressOverlay.translatesAutoresizingMaskIntoConstraints = YES;
+    progressOverlay.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.45];
+    progressOverlay.userInteractionEnabled = NO;
+    progressOverlay.layer.anchorPoint = CGPointMake(0, 0.5);
+    progressOverlay.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    view.progressOverlay = progressOverlay;
+    [view addSubview:progressOverlay];
 
     // Message label
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.text = message;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
+    label.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
     label.numberOfLines = 2;
     label.lineBreakMode = NSLineBreakByTruncatingTail;
     view.messageLabel = label;
@@ -43,18 +51,17 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.translatesAutoresizingMaskIntoConstraints = NO;
 
-    // Determine icon based on context
-    NSString *iconName = @"forward.end.fill"; // Default: skip forward
+    NSString *iconName = @"forward.end.fill";
     if (buttonTitle && ([buttonTitle.lowercaseString containsString:@"unskip"] || [buttonTitle.lowercaseString containsString:@"back"])) {
-        iconName = @"backward.end.fill"; // Go back / unskip
+        iconName = @"backward.end.fill";
     }
 
-    UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:16 weight:UIImageSymbolWeightMedium];
+    UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:14 weight:UIImageSymbolWeightMedium];
     UIImage *icon = [UIImage systemImageNamed:iconName withConfiguration:config];
     [button setImage:icon forState:UIControlStateNormal];
     button.tintColor = [UIColor whiteColor];
     button.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.15];
-    button.layer.cornerRadius = 18.0;
+    button.layer.cornerRadius = 16.0;
     button.clipsToBounds = YES;
     [button addTarget:view action:@selector(actionButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     view.actionButton = button;
@@ -62,47 +69,158 @@
 
     [parentView addSubview:view];
 
-    // Layout: full width with padding, bottom-anchored
+    // Layout: centered horizontally, anchored above tab bar via safe area
+    NSLayoutConstraint *maxWidth = [view.widthAnchor constraintLessThanOrEqualToAnchor:parentView.widthAnchor multiplier:0.85];
     [NSLayoutConstraint activateConstraints:@[
-        [view.leadingAnchor constraintEqualToAnchor:parentView.leadingAnchor constant:16.0],
-        [view.trailingAnchor constraintEqualToAnchor:parentView.trailingAnchor constant:-16.0],
-        [view.bottomAnchor constraintEqualToAnchor:parentView.bottomAnchor constant:-80.0]
+        [view.centerXAnchor constraintEqualToAnchor:parentView.centerXAnchor],
+        [view.bottomAnchor constraintEqualToAnchor:parentView.safeAreaLayoutGuide.bottomAnchor constant:-60.0],
+        [view.heightAnchor constraintEqualToConstant:44.0],
+        maxWidth
     ]];
 
     // Internal layout
     [NSLayoutConstraint activateConstraints:@[
         [label.leadingAnchor constraintEqualToAnchor:view.leadingAnchor constant:16.0],
-        [label.topAnchor constraintEqualToAnchor:view.topAnchor constant:12.0],
-        [label.bottomAnchor constraintEqualToAnchor:view.bottomAnchor constant:-12.0],
-        [label.trailingAnchor constraintEqualToAnchor:button.leadingAnchor constant:-12.0],
+        [label.centerYAnchor constraintEqualToAnchor:view.centerYAnchor],
+        [label.trailingAnchor constraintEqualToAnchor:button.leadingAnchor constant:-10.0],
 
-        [button.trailingAnchor constraintEqualToAnchor:view.trailingAnchor constant:-12.0],
+        [button.trailingAnchor constraintEqualToAnchor:view.trailingAnchor constant:-8.0],
         [button.centerYAnchor constraintEqualToAnchor:view.centerYAnchor],
-        [button.widthAnchor constraintEqualToConstant:36.0],
-        [button.heightAnchor constraintEqualToConstant:36.0]
+        [button.widthAnchor constraintEqualToConstant:32.0],
+        [button.heightAnchor constraintEqualToConstant:32.0]
     ]];
 
-    // Swipe down to dismiss
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:view action:@selector(dismiss)];
-    swipe.direction = UISwipeGestureRecognizerDirectionDown;
-    [view addGestureRecognizer:swipe];
+    // Pan gesture for interactive dismissal
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:view action:@selector(handlePan:)];
+    [view addGestureRecognizer:pan];
 
-    // Fade in
+    // Slide up from below
+    view.transform = CGAffineTransformMakeTranslation(0, 60);
     view.alpha = 0.0;
-    view.transform = CGAffineTransformMakeTranslation(0, 10);
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:0.85 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
         view.alpha = 1.0;
         view.transform = CGAffineTransformIdentity;
-    } completion:nil];
-
-    // Auto-dismiss
-    if (duration > 0) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [view dismiss];
-        });
-    }
+    } completion:^(BOOL finished) {
+        if (finished && duration > 0) {
+            [view startProgressAnimation];
+        }
+    }];
 
     return view;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (self.progressOverlay.layer.animationKeys.count == 0 || self.isPaused) {
+        self.progressOverlay.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+    }
+}
+
+- (void)startProgressAnimation {
+    if (self.remainingDuration <= 0) return;
+
+    self.progressOverlay.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+
+    [UIView animateWithDuration:self.remainingDuration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.progressOverlay.transform = CGAffineTransformMakeScale(0.001, 1.0);
+        self.progressOverlay.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (finished && !self.isPaused && self.superview) {
+            [self dismiss];
+        }
+    }];
+}
+
+- (void)pauseProgress {
+    if (self.isPaused) return;
+    self.isPaused = YES;
+
+    CALayer *presentationLayer = self.progressOverlay.layer.presentationLayer;
+    CGFloat currentScaleX = 1.0;
+    if (presentationLayer) {
+        CATransform3D t = presentationLayer.transform;
+        currentScaleX = t.m11;
+    }
+
+    [self.progressOverlay.layer removeAllAnimations];
+    currentScaleX = MAX(0.001, MIN(currentScaleX, 1.0));
+    self.progressOverlay.transform = CGAffineTransformMakeScale(currentScaleX, 1.0);
+    self.progressOverlay.alpha = currentScaleX;
+    self.remainingDuration = self.totalDuration * currentScaleX;
+}
+
+- (void)resumeProgress {
+    if (!self.isPaused) return;
+    self.isPaused = NO;
+
+    if (self.remainingDuration <= 0) {
+        [self dismiss];
+        return;
+    }
+
+    [UIView animateWithDuration:self.remainingDuration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.progressOverlay.transform = CGAffineTransformMakeScale(0.001, 1.0);
+        self.progressOverlay.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (finished && !self.isPaused && self.superview) {
+            [self dismiss];
+        }
+    }];
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)gesture {
+    if (self.alpha < 1.0) {
+        gesture.enabled = NO;
+        gesture.enabled = YES;
+        return;
+    }
+
+    CGPoint translation = [gesture translationInView:self.superview];
+    CGPoint velocity = [gesture velocityInView:self.superview];
+
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+            [self pauseProgress];
+            break;
+
+        case UIGestureRecognizerStateChanged:
+            self.transform = CGAffineTransformMakeTranslation(0, translation.y);
+            break;
+
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled: {
+            CGFloat distanceThreshold = 30.0;
+            CGFloat velocityThreshold = 500.0;
+            BOOL shouldDismiss = (fabs(translation.y) > distanceThreshold) || (fabs(velocity.y) > velocityThreshold);
+
+            if (shouldDismiss) {
+                CGFloat direction = (translation.y < 0) ? -1.0 : 1.0;
+                [self dismissInDirection:direction velocity:fabs(velocity.y)];
+            } else {
+                // Snap back
+                [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0.5 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                    self.transform = CGAffineTransformIdentity;
+                } completion:^(BOOL finished) {
+                    [self resumeProgress];
+                }];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)dismissInDirection:(CGFloat)direction velocity:(CGFloat)velocity {
+    CGFloat offscreenY = direction < 0 ? -(self.frame.size.height + 80) : (self.frame.size.height + 80);
+    CGFloat animDuration = velocity > 500 ? 0.2 : 0.35;
+
+    [UIView animateWithDuration:animDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.transform = CGAffineTransformMakeTranslation(0, offscreenY);
+        self.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
 }
 
 - (void)actionButtonTapped {
@@ -113,9 +231,10 @@
 }
 
 - (void)dismiss {
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [self.progressOverlay.layer removeAllAnimations];
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.transform = CGAffineTransformMakeTranslation(0, 60);
         self.alpha = 0.0;
-        self.transform = CGAffineTransformMakeTranslation(0, 10);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
