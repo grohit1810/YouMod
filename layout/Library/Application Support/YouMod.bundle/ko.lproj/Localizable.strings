@@ -79,6 +79,12 @@
 "HIDE_MEMBER_BUTTON_DESC" = "채널 홈이나 영상 설명창에서 멤버십 '가입' 버튼을 숨깁니다.";
 
 "PLAYER" = "동영상 플레이어";
+"QUALITY_WIFI" = "Playback quality on WiFi";
+"QUALITY_WIFI_DESC" = "Automatically applies the selected quality when streaming over Wi-Fi.";
+"QUALITY_CELLULAR" = "Playback quality on Cellular";
+"QUALITY_CELLULAR_DESC" = "Automatically applies the selected quality when streaming over mobile data.";
+"DEFAULT" = "Default";
+"BEST" = "Best";
 "DEFAULT_SPEED" = "Default playback rate";
 "DEFAULT_SPEED_DESC" = "Overrides the default playback speed.";
 "HIDE_AUTOPLAY" = "자동재생 스위치 숨기기";

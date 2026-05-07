@@ -34,6 +34,9 @@
 #import <YouTubeHeader/YTSingleVideoController.h>
 #import <YouTubeHeader/YTPlayerView.h>
 #import <YouTubeHeader/YTLabel.h>
+#import <YouTubeHeader/MLFormat.h>
+#import <YouTubeHeader/MLQuickMenuVideoQualitySettingFormatConstraint.h>
+#import <YouTubeHeader/GCKNNetworkReachability.h>
 #import <YouTubeHeader/YTCommonColorPalette.h>
 #import <YouTubeHeader/YTIPivotBarSupportedRenderers.h>
 #import <YouTubeHeader/YTIBrowseRequest.h>
@@ -80,8 +83,8 @@
 #define HideShoppingButton @"YouModHideShoppingButton"
 #define HideMemberButton @"YouModHideMemberButton"
 // Player
-// #define WifiQualityIndex @"YouModWifiQualityIndex"
-// #define CellQualityIndex @"YouModCellQualityIndex"
+#define WifiQualityIndex @"YouModWifiQualityIndex"
+#define CellQualityIndex @"YouModCellQualityIndex"
 #define AutoSpeedIndex @"YouModAutoSpeedIndex"
 #define HideAutoPlayToggle @"YouModHideAutoPlayToggle"
 #define HideCaptionsButton @"YouModHideCaptionsButton"
@@ -252,6 +255,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 - (void)YouModTurnOffCaptions;
 - (void)YouModShortsToRegular;
 - (void)YouModSetAutoSpeed;
+- (void)YouModAutoQuality;
 - (void)setActiveCaptionTrack:(id)arg1 source:(long long)arg2;
 - (void)setPlaybackRate:(float)rate;
 @end

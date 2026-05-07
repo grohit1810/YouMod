@@ -79,6 +79,12 @@
 "HIDE_MEMBER_BUTTON_DESC" = "Nasconde il pulsante 'Abbonati' nei canali e nelle descrizioni dei video.";
 
 "PLAYER" = "Player";
+"QUALITY_WIFI" = "Playback quality on WiFi";
+"QUALITY_WIFI_DESC" = "Automatically applies the selected quality when streaming over Wi-Fi.";
+"QUALITY_CELLULAR" = "Playback quality on Cellular";
+"QUALITY_CELLULAR_DESC" = "Automatically applies the selected quality when streaming over mobile data.";
+"DEFAULT" = "Default";
+"BEST" = "Best";
 "DEFAULT_SPEED" = "Default playback rate";
 "DEFAULT_SPEED_DESC" = "Overrides the default playback speed.";
 "HIDE_AUTOPLAY" = "Nascondi interruttore riproduzione automatica";

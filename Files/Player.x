@@ -302,7 +302,7 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     if (IS_ENABLED(ShortsToRegular)) [self performSelector:@selector(YouModShortsToRegular) withObject:nil afterDelay:0.75];
     if (IS_ENABLED(DisablesCaptions)) [self performSelector:@selector(YouModTurnOffCaptions) withObject:nil afterDelay:1.0];
     if (INTFORVAL(AutoSpeedIndex) != 0) [self performSelector:@selector(YouModSetAutoSpeed) withObject:nil afterDelay:0.75];
-    // if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [self performSelector:@selector(YouModAutoQuality) withObject:nil afterDelay:1.0];
+    if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [self performSelector:@selector(YouModAutoQuality) withObject:nil afterDelay:1.0];
 }
 
 - (void)prepareToLoadWithPlayerTransition:(id)arg1 expectedLayout:(id)arg2 {
@@ -312,7 +312,7 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     if (IS_ENABLED(ShortsToRegular)) [self performSelector:@selector(YouModShortsToRegular) withObject:nil afterDelay:0.75];
     if (IS_ENABLED(DisablesCaptions)) [self performSelector:@selector(YouModTurnOffCaptions) withObject:nil afterDelay:1.0];
     if (INTFORVAL(AutoSpeedIndex) != 0) [self performSelector:@selector(YouModSetAutoSpeed) withObject:nil afterDelay:0.75];
-    // if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [self performSelector:@selector(YouModAutoQuality) withObject:nil afterDelay:1.0];
+    if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [self performSelector:@selector(YouModAutoQuality) withObject:nil afterDelay:1.0];
 }
 
 %new
@@ -339,15 +339,14 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     }
 }
 
-/*
 %new
 - (void)YouModAutoQuality {
     if (![self.view.superview isKindOfClass:NSClassFromString(@"YTWatchView")]) {
         return;
     }
 
-    NetworkStatus status = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
-    NSInteger kQualityIndex = status == ReachableViaWiFi ? INTFORVAL(WifiQualityIndex) : INTFORVAL(CellQualityIndex);
+    BOOL isWifi = [[%c(GCKNNetworkReachability) sharedInstance] currentStatus] == 1;
+    NSInteger kQualityIndex = isWifi ? INTFORVAL(WifiQualityIndex) : INTFORVAL(CellQualityIndex);
 
     NSString *bestQualityLabel;
     int highestResolution = 0;
@@ -359,7 +358,7 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
         }
     }
 
-    NSArray *qualityLabels = @[@"Default", bestQualityLabel, @"2160p60", @"2160p", @"1440p60", @"1440p", @"1080p60", @"1080p", @"720p60", @"720p", @"480p", @"360p"];
+    NSArray *qualityLabels = @[@"Default", bestQualityLabel, @"2160p60", @"2160p", @"1440p60", @"1440p", @"1080p60", @"1080p", @"720p60", @"720p", @"480p", @"360p", @"240p", @"144p"];
     NSString *qualityLabel = qualityLabels[kQualityIndex];
 
     if (![qualityLabel isEqualToString:bestQualityLabel]) {
@@ -395,11 +394,14 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     }
 
     MLQuickMenuVideoQualitySettingFormatConstraint *fc = [[%c(MLQuickMenuVideoQualitySettingFormatConstraint) alloc] init];
-    if ([fc respondsToSelector:@selector(initWithVideoQualitySetting:formatSelectionReason:qualityLabel:)]) {
+    if ([fc respondsToSelector:@selector(initWithVideoQualitySetting:formatSelectionReason:qualityLabel:resolutionCap:)]) {
+        [self.activeVideo setVideoFormatConstraint:[fc initWithVideoQualitySetting:3 formatSelectionReason:2 qualityLabel:qualityLabel resolutionCap:0]];
+    } else {
         [self.activeVideo setVideoFormatConstraint:[fc initWithVideoQualitySetting:3 formatSelectionReason:2 qualityLabel:qualityLabel]];
     }
 }
 
+/*
 - (void)singleVideo:(YTSingleVideoController *)video currentVideoTimeDidChange:(YTSingleVideoTime *)time {
     %orig;
     YouModAddEndTime(self, video, time);
