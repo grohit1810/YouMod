@@ -203,8 +203,8 @@ static NSString *YouModYouTubeCookiesString(void) {
 }
 
 static NSString *YouModNativeUserAgent(void) {
-    NSString *version = @"18.18.2";
-    NSString *sysVersion = [[UIDevice currentDevice].systemVersion stringByReplacingOccurrencesOfString:@"." withString:@"_"] ?: @"17_4";
+    NSString *version = @"21.18.4";
+    NSString *sysVersion = [[UIDevice currentDevice].systemVersion stringByReplacingOccurrencesOfString:@"." withString:@"_"] ?: @"18_7";
     return [NSString stringWithFormat:@"com.google.ios.youtube/%@ (iPhone; CPU iPhone OS %@ like Mac OS X)", version, sysVersion];
 }
 
@@ -914,12 +914,8 @@ static NSString *YouModFFmpegKitDiagnosticText(YouModAudioOutputFormat *outputFo
     Class ffmpegKitClass = NSClassFromString(@"FFmpegKit");
     SEL executeSelector = @selector(executeWithArgumentsAsync:withCompleteCallback:withLogCallback:withStatisticsCallback:);
     NSMutableArray <NSString *> *lines = [NSMutableArray array];
-    NSBundle *mainBundle = NSBundle.mainBundle;
-    NSString *resourcePath = mainBundle.resourcePath ?: @"";
-    NSString *privateFrameworksPath = mainBundle.privateFrameworksPath ?: @"";
-    NSString *executablePath = mainBundle.executablePath ?: @"";
-    NSString *bundlePath = [resourcePath stringByAppendingPathComponent:@"YouMod.bundle"];
-    NSString *packageFrameworkPath = [resourcePath stringByAppendingPathComponent:@"YouMod.bundle/Frameworks"];
+    NSString *bundlePath = [[NSBundle.mainBundle resourcePath] stringByAppendingPathComponent:@"YouMod.bundle"];
+    NSString *frameworksInsideBundle = [bundlePath stringByAppendingPathComponent:@"Frameworks"];
 
     [lines addObject:@"FFmpegKit lookup"];
     [lines addObject:[NSString stringWithFormat:@"videoID=%@", videoID ?: @""]];
@@ -927,12 +923,8 @@ static NSString *YouModFFmpegKitDiagnosticText(YouModAudioOutputFormat *outputFo
     [lines addObject:[NSString stringWithFormat:@"sourceMime=%@", sourceFormat.mimeType ?: @""]];
     [lines addObject:[NSString stringWithFormat:@"sourceQuality=%@", sourceFormat.qualityLabel ?: @""]];
     [lines addObject:[NSString stringWithFormat:@"sourceBytes=%llu", sourceFormat.contentLength]];
-    [lines addObject:[NSString stringWithFormat:@"mainBundle=%@", mainBundle.bundlePath ?: @""]];
-    [lines addObject:[NSString stringWithFormat:@"resourcePath=%@", resourcePath]];
-    [lines addObject:[NSString stringWithFormat:@"privateFrameworksPath=%@", privateFrameworksPath]];
-    [lines addObject:[NSString stringWithFormat:@"executablePath=%@", executablePath]];
     [lines addObject:[NSString stringWithFormat:@"YouMod.bundle exists=%@", [NSFileManager.defaultManager fileExistsAtPath:bundlePath] ? @"YES" : @"NO"]];
-    [lines addObject:[NSString stringWithFormat:@"YouMod.bundle/Frameworks exists=%@", [NSFileManager.defaultManager fileExistsAtPath:packageFrameworkPath] ? @"YES" : @"NO"]];
+    [lines addObject:[NSString stringWithFormat:@"YouMod.bundle/Frameworks exists=%@", [NSFileManager.defaultManager fileExistsAtPath:frameworksInsideBundle] ? @"YES" : @"NO"]];
     [lines addObject:[NSString stringWithFormat:@"FFmpegKit class=%@", ffmpegKitClass ? @"YES" : @"NO"]];
     [lines addObject:[NSString stringWithFormat:@"FFmpegKit execute selector=%@", [ffmpegKitClass respondsToSelector:executeSelector] ? @"YES" : @"NO"]];
     [lines addObject:[NSString stringWithFormat:@"ReturnCode class=%@", NSClassFromString(@"ReturnCode") ? @"YES" : @"NO"]];
