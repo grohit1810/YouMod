@@ -111,6 +111,8 @@
 "HIDE_PAID_OVERLAY_DESC" = "Ẩn 'Chứa nội dung quảng cáo trả phí' trong trình phát video.";
 "HIDE_WATERMARK" = "Ẩn hình mờ (Watermark)";
 "HIDE_WATERMARK_DESC" = "Ẩn hình mờ của các kênh trong trình phát video.";
+"PAUSE_ON_OVERLAY" = "Pause on overlay";
+"PAUSE_ON_OVERLAY_DESC" = "Sets playback on pause if overlay appears.";
 "GESTURES" = "Bật điều khiển bằng cử chỉ";
 "GESTURES_DESC" = "Vuốt lên hoặc xuống ở cạnh trái/phải của màn hình video để điều chỉnh độ sáng, âm lượng hoặc tốc độ phát.";
 "GESTURE_AREA" = "Khu vực cử chỉ";

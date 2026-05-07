@@ -111,6 +111,8 @@
 "HIDE_PAID_OVERLAY_DESC" = "Nasconde l'avviso 'Include promozioni a pagamento' nel player.";
 "HIDE_WATERMARK" = "Nascondi filigrana";
 "HIDE_WATERMARK_DESC" = "Nasconde la filigrana del canale in basso nel player.";
+"PAUSE_ON_OVERLAY" = "Pause on overlay";
+"PAUSE_ON_OVERLAY_DESC" = "Sets playback on pause if overlay appears.";
 "GESTURES" = "Abilita gestures";
 "GESTURES_DESC" = "Swipe up or down on the left/right edges of the video screen to adjust brightness, volume, or playback speed.";
 "GESTURE_AREA" = "Gesture activation area";

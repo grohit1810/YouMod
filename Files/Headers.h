@@ -98,6 +98,7 @@
 #define HideSuggestedVideo @"YouModHideSuggestedVideoOnFinish"
 #define HidePaidPromoOverlay @"YouModHidePaidPromoOverlay"
 #define HideWaterMark @"YouModHideWaterMark"
+#define PauseOnOverlay @"YouModPauseOnOverlay"
 #define GestureControls @"YouModEnableGesturesControls"
 #define GestureActivationArea @"YouModGestureActivationArea"
 #define LeftSideGesture @"YouModLeftSideGesture"
@@ -146,6 +147,7 @@
 #define HideShortsToVideo @"YouModHideShortsToVideo"
 #define EnablesShortsQuality @"YouModEnablesShortsQuality"
 #define ShowShortsSeekbar @"YouModShowShortsSeekbar"
+// #define ShortsAction @"YouModMakeAShortsAction"
 // Tab bar
 #define DefaultTab @"YouModDefaultStartupTab"
 #define HideTabIndi @"YouModHideTabIndicators"
@@ -258,6 +260,8 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 - (void)YouModAutoQuality;
 - (void)setActiveCaptionTrack:(id)arg1 source:(long long)arg2;
 - (void)setPlaybackRate:(float)rate;
+- (void)play;
+- (void)pause;
 @end
 
 @interface SSOConfiguration : NSObject

@@ -240,6 +240,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
             YMToggle(LOC(@"HIDE_SUGGESTED_VIDEO"), LOC(@"HIDE_SUGGESTED_VIDEO_DESC"), HideSuggestedVideo),
             YMToggle(LOC(@"HIDE_PAID_OVERLAY"), LOC(@"HIDE_PAID_OVERLAY_DESC"), HidePaidPromoOverlay),
             YMToggle(LOC(@"HIDE_WATERMARK"), LOC(@"HIDE_WATERMARK_DESC"), HideWaterMark),
+            YMToggle(LOC(@"PAUSE_ON_OVERLAY"), LOC(@"PAUSE_ON_OVERLAY_DESC"), PauseOnOverlay),
             YMToggle(LOC(@"GESTURES"), LOC(@"GESTURES_DESC"), GestureControls),
             YMPicker(LOC(@"GESTURE_AREA"), LOC(@"GESTURE_AREA_DESC"), GestureActivationArea, (@[@"10%", @"15%", @"20%", @"25%", @"30%", @"35%", @"40%", @"45%", @"50%"]), 1),
             YMPicker(LOC(@"LEFT_SIDE_GESTURE"), nil, LeftSideGesture, (@[LOC(@"GESTURE_NONE"), LOC(@"GESTURE_BRIGHTNESS"), LOC(@"GESTURE_VOLUME"), LOC(@"GESTURE_SPEED")]), 1),

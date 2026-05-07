@@ -111,6 +111,8 @@
 "HIDE_PAID_OVERLAY_DESC" = "Cacher 'Inclus du contenu sponsorisé' dans l'interface vidéo.";
 "HIDE_WATERMARK" = "Cacher le filigrane";
 "HIDE_WATERMARK_DESC" = "Cache le filigrane de la chaîne en bas de l'interface vidéo.";
+"PAUSE_ON_OVERLAY" = "Pause on overlay";
+"PAUSE_ON_OVERLAY_DESC" = "Sets playback on pause if overlay appears.";
 "GESTURES" = "Activer le contrôle par gestes";
 "GESTURES_DESC" = "Faites glisser vers le haut ou le bas sur les bords gauche/droit de l'écran vidéo pour régler la luminosité, le volume ou la vitesse de lecture.";
 "GESTURE_AREA" = "Zone d'activation des gestes";

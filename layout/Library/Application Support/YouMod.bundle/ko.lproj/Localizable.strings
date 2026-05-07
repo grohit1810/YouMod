@@ -111,6 +111,8 @@
 "HIDE_PAID_OVERLAY_DESC" = "영상 화면에 뜨는 '유료 광고 포함' 안내 배너를 숨깁니다.";
 "HIDE_WATERMARK" = "채널 워터마크 숨기기";
 "HIDE_WATERMARK_DESC" = "영상 오른쪽 아래 구석에 작게 떠 있는 채널 로고(워터마크)를 숨깁니다.";
+"PAUSE_ON_OVERLAY" = "Pause on overlay";
+"PAUSE_ON_OVERLAY_DESC" = "Sets playback on pause if overlay appears.";
 "GESTURES" = "제스처 제어 켜기";
 "GESTURES_DESC" = "화면을 스와이프하여 조작하는 제스처 기능을 켭니다.\n상단: 밝기 조절, 하단: 볼륨 조절";
 "GESTURE_AREA" = "제스처 작동 영역 범위";
