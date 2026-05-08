@@ -226,6 +226,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @end
 
 @interface YTMainAppVideoPlayerOverlayView (YouMod)
+@property (nonatomic, weak, readwrite) YTMainAppVideoPlayerOverlayViewController *delegate;
 @property (nonatomic, strong) YTQTMButton *playbackRouteButton;
 @end
 
@@ -322,6 +323,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 
 @interface YTMainAppVideoPlayerOverlayViewController (YouMod)
 @property (nonatomic, strong, readwrite) YTPlayerBarController *playerBarController;
+@property (nonatomic, assign) YTPlayerViewController *parentViewController;
 @end
 
 @interface YTInlinePlayerBarContainerView (YouMod)
