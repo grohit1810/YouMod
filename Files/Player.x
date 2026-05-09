@@ -315,9 +315,9 @@ static CGFloat YouModSpeedForHoldIndex(NSInteger index) {
 static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMainAppVideoPlayerOverlayViewController *delegate) {
     NSInteger speedIndex = INTFORVAL(HoldToSpeedIndex);
     CGFloat speed = YouModSpeedForHoldIndex(speedIndex);
+    float YouModRateBeforeHoldToSpeed = [delegate currentPlaybackRate];
 
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        float YouModRateBeforeHoldToSpeed = [delegate currentPlaybackRate];
         [delegate setPlaybackRate:speed];
     } else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled || gesture.state == UIGestureRecognizerStateFailed) {
         [delegate setPlaybackRate:YouModRateBeforeHoldToSpeed];

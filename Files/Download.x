@@ -1902,15 +1902,6 @@ static void YouModPresentMenu(NSString *title, NSArray <YouModMenuItem *> *items
     BOOL passthrough = YouModAudioOutputFormatCanPassthrough(outputFormat, audioFormat);
     if (!passthrough && !YouModFFmpegKitAvailable()) {
         self.active = NO;
-        NSString *details = YouModFFmpegKitDiagnosticText(outputFormat, audioFormat, videoID);
-        YouModRecordDownloadDiagnostic(@"FFmpegKit unavailable for audio conversion", details);
-        NSString *diagnostic = YouModDownloadDiagnosticText();
-        if (diagnostic.length) {
-            UIPasteboard.generalPasteboard.string = diagnostic;
-            YouModSendToast(@"FFmpegKit not loaded, diagnostics copied", presenter);
-        } else {
-            YouModSendToast([NSString stringWithFormat:@"FFmpegKit required for %@", outputFormat.title ?: @"this format"], presenter);
-        }
         return;
     }
 
