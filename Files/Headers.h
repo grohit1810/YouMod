@@ -225,6 +225,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @end
 
 @interface YTMainAppVideoPlayerOverlayView (YouMod)
+@property (nonatomic, assign, readonly) YTInlinePlayerScrubUserEducationView *scrubUserEducationView;
 @property (nonatomic, weak, readwrite) YTMainAppVideoPlayerOverlayViewController *delegate;
 @property (nonatomic, strong) YTQTMButton *playbackRouteButton;
 - (void)YouModHoldToSpeed:(UILongPressGestureRecognizer *)gesture;

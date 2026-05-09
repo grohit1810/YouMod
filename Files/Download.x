@@ -1160,8 +1160,8 @@ static NSArray <YouModAudioOutputFormat *> *YouModAudioOutputFormats(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         formats = @[
-            YouModAudioOutputFormatMake(@"m4a", @"M4A", nil, @"m4a", @[@"-map", @"0:a:0", @"-vn", @"-c:a", @"aac", @"-b:a", @"192k", @"-movflags", @"+faststart"], YES, YES),
-            YouModAudioOutputFormatMake(@"aac", @"AAC", nil, @"aac", @[@"-map", @"0:a:0", @"-vn", @"-c:a", @"aac", @"-b:a", @"192k", @"-f", @"adts"], YES, YES),
+            YouModAudioOutputFormatMake(@"m4a", @"M4A", @"", @"m4a", @[@"-map", @"0:a:0", @"-vn", @"-c:a", @"aac", @"-b:a", @"192k", @"-movflags", @"+faststart"], YES, YES),
+            YouModAudioOutputFormatMake(@"aac", @"AAC", @"", @"aac", @[@"-map", @"0:a:0", @"-vn", @"-c:a", @"aac", @"-b:a", @"192k", @"-f", @"adts"], YES, YES),
             /*
             YouModAudioOutputFormatMake(@"mp3", @"MP3", @"Lossy, widely compatible", @"mp3", @[@"-map", @"0:a:0", @"-vn", @"-c:a", @"libmp3lame", @"-q:a", @"2"], NO, YES),
             YouModAudioOutputFormatMake(@"opus", @"Opus", @"Lossy, small file size", @"opus", @[@"-map", @"0:a:0", @"-vn", @"-c:a", @"libopus", @"-b:a", @"160k", @"-vbr", @"on"], NO, YES),
