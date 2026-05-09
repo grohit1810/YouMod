@@ -89,7 +89,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
 
     // Tweak Version (at the top)
     // Thanks to the original codes from YTweaks by fosterbarnes - https://github.com/fosterbarnes/YTweaks/blob/e921591a89b87256a2b37c4788bd99282f70d9c2/Settings.x
-    YTSettingsSectionItem *tweakVersion = [YTSettingsSectionItemClass itemWithTitle:@"YouMod v1.4.0"
+    YTSettingsSectionItem *tweakVersion = [YTSettingsSectionItemClass itemWithTitle:@"YouMod v2.0.0"
         titleDescription:nil
         accessibilityIdentifier:nil
         detailTextBlock:nil
@@ -255,6 +255,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
             YMToggle(LOC(@"AUTO_DISABLES_CAPTION"), LOC(@"AUTO_DISABLES_CAPTION_DESC"), DisablesCaptions),
             YMToggle(LOC(@"DISABLES_SHOW_REMAINING"), LOC(@"DISABLES_SHOW_REMAINING_DESC"), DisablesShowRemaining),
             YMToggle(LOC(@"ALWAYS_SHOW_REMAINING"), LOC(@"ALWAYS_SHOW_REMAINING_DESC"), AlwaysShowRemaining),
+            YMToggle(LOC(@"COPY_TIMESTAMP_ON_PAUSE"), LOC(@"COPY_TIMESTAMP_ON_PAUSE_DESC"), CopyWithTimestampOnPause),
             // YMToggle(LOC(@"SHOW_REMAINING_EXTRA"), LOC(@"SHOW_REMAINING_EXTRA_DESC"), ShowExtraTimeRemaining),
             YMToggle(LOC(@"HIDE_FULLSCREEN_ACTIONS"), LOC(@"HIDE_FULLSCREEN_ACTIONS_DESC"), HideFullAction),
             YMToggle(LOC(@"HIDE_FULL_VID_TITLE"), LOC(@"HIDE_FULL_VID_TITLE_DESC"), HideFullvidTitle),

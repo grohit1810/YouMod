@@ -107,6 +107,15 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
 - (BOOL)allowDoubleTapToSeekGestureRecognizer { return IS_ENABLED(DisablesDoubleTap) ? NO : %orig; }
 // Disable long hold
 - (BOOL)allowLongPressGestureRecognizerInView:(id)arg { return IS_ENABLED(DisablesLongHold) ? NO : %orig; }
+// Copy timestamp on pause
+- (void)didPressPause:(id)arg {
+    %orig;
+    if (!IS_ENABLED(CopyWithTimestampOnPause)) return;
+    CGFloat mediaTimeIn = self.mediaTime;
+    NSString *vidID = self.videoID;
+    if (vidID.length)
+        UIPasteboard.generalPasteboard.string = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@&t=%lds", vidID, (long)mediaTimeIn];
+}
 %end
 
 // YTNoPaidPromo (https://github.com/PoomSmart/YTNoPaidPromo)
@@ -341,23 +350,6 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
     YouModManageHoldToSpeed(gesture, self.delegate);
 }
 %end
-
-/*
-%hook YTMainAppVideoPlayerOverlayViewController
-- (void)didPressPause:(id)sender {
-    %orig;
-    if (!IS_ENABLED(CopyTimestampOnPause)) return;
-    NSString *videoID = nil;
-    CGFloat mediaTime = 0;
-    @try {
-        videoID = [self valueForKey:@"videoID"];
-        mediaTime = [[self valueForKey:@"mediaTime"] doubleValue];
-    } @catch (NSException *exception) {}
-    if (videoID.length)
-        UIPasteboard.generalPasteboard.string = [NSString stringWithFormat:@"https://www.youtube.com/watch?v=%@&t=%lds", videoID, (long)mediaTime];
-}
-%end
-*/
 
 %hook YTPlayerViewController
 - (void)loadWithPlayerTransition:(id)arg1 playbackConfig:(id)arg2 {

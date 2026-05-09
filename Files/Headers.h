@@ -34,6 +34,7 @@
 #import <YouTubeHeader/YTSingleVideoTime.h>
 #import <YouTubeHeader/YTSingleVideoController.h>
 #import <YouTubeHeader/YTPlayerView.h>
+// #import <YouTubeHeader/YTReelPlayerViewController.h>
 #import <YouTubeHeader/YTLabel.h>
 #import <YouTubeHeader/MLFormat.h>
 #import <YouTubeHeader/MLQuickMenuVideoQualitySettingFormatConstraint.h>
@@ -114,6 +115,7 @@
 #define DisablesShowRemaining @"YouModDisablesShowRemainingTime"
 #define AlwaysShowRemaining @"YouModAlwaysShowRemainingTime"
 #define ShowExtraTimeRemaining @"YouModShowExtraTimeRemaining"
+#define CopyWithTimestampOnPause @"YouModCopyWithTimestampOnPause"
 #define HideFullAction @"YouModHideFullScreenAction"
 #define HideFullvidTitle @"YouModHideFullscreenVideoTitle"
 #define StopAutoplayVideo @"YouModStopAutoplayVideo"
@@ -150,7 +152,7 @@
 #define HideShortsToVideo @"YouModHideShortsToVideo"
 #define EnablesShortsQuality @"YouModEnablesShortsQuality"
 #define ShowShortsSeekbar @"YouModShowShortsSeekbar"
-// #define ShortsAction @"YouModMakeAShortsAction"
+// #define ShortsActionIndex @"YouModMakeAShortsAction"
 // Tab bar
 #define DefaultTab @"YouModDefaultStartupTab"
 #define HideTabIndi @"YouModHideTabIndicators"
@@ -224,13 +226,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @property (nonatomic, strong) YTQTMButton *searchButton;
 @end
 
-@interface YTInlinePlayerScrubUserEducationView : UIView
-@property (nonatomic, assign, readwrite) NSUInteger labelType;
-- (void)setVisible:(BOOL)visible;
-@end
-
 @interface YTMainAppVideoPlayerOverlayView (YouMod)
-@property (nonatomic, assign, readonly) YTInlinePlayerScrubUserEducationView *scrubUserEducationView;
 @property (nonatomic, weak, readwrite) YTMainAppVideoPlayerOverlayViewController *delegate;
 @property (nonatomic, strong) YTQTMButton *playbackRouteButton;
 - (void)YouModHoldToSpeed:(UILongPressGestureRecognizer *)gesture;
@@ -260,6 +256,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @interface YTPlayerViewController (YouMod) <UIGestureRecognizerDelegate>
 @property (nonatomic, retain) UIPanGestureRecognizer *YouModPanGesture;
 @property (nonatomic, retain) UILabel *YouModGestureHUD;
+// @property (nonatomic, weak, readwrite) UIViewController *parentViewController;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer;
 - (void)YouModAutoFullscreen;
 - (void)YouModTurnOffCaptions;
@@ -330,6 +327,8 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @interface YTMainAppVideoPlayerOverlayViewController (YouMod)
 @property (nonatomic, strong, readwrite) YTPlayerBarController *playerBarController;
 @property (nonatomic, assign) YTPlayerViewController *parentViewController;
+- (NSString *)videoID;
+- (CGFloat)mediaTime;
 @end
 
 @interface YTInlinePlayerBarContainerView (YouMod)
@@ -343,6 +342,13 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @property (nonatomic, assign, readonly) CGFloat totalMediaTime;
 - (void)setVideoFormatConstraint:(id)arg;
 @end
+
+/*
+@interface YTReelPlayerViewController (YouMod)
+- (void)reelContentViewRequestsAdvanceToNextVideo:(id)arg;
+- (void)reelContentViewRequestsSuspendPlayback:(id)arg;
+@end
+*/
 
 // SponsorBlock action modes
 typedef NS_ENUM(NSInteger, SBSegmentAction) {

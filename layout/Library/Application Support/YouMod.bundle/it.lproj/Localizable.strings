@@ -192,6 +192,8 @@
 "DISABLES_SHOW_REMAINING_DESC" = "Disabilita la funzione che mostra quanto tempo manca alla fine del video toccando il timestamp.";
 "ALWAYS_SHOW_REMAINING" = "Mostra sempre il tempo rimanente";
 "ALWAYS_SHOW_REMAINING_DESC" = "Assicura che il tempo rimanente sia sempre visualizzato per impostazione predefinita nel player.";
+"COPY_TIMESTAMP_ON_PAUSE" = "Copy timestamped links";
+"COPY_TIMESTAMP_ON_PAUSE_DESC" = "Allows to copy timestamped link to the clipboard by pressing pause button.";
 "SHOW_REMAINING_EXTRA" = "Show extra remaining time";
 "SHOW_REMAINING_EXTRA_DESC" = "Adds the estimated finish time to the label in the video overlay.";
 "HIDE_FULLSCREEN_ACTIONS" = "Nascondi azioni a schermo intero";

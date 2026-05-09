@@ -192,6 +192,8 @@
 "DISABLES_SHOW_REMAINING_DESC" = "Tắt tính năng hiển thị thời lượng còn lại của video khi nhấn vào mốc thời gian.";
 "ALWAYS_SHOW_REMAINING" = "Luôn hiển thị thời gian còn lại";
 "ALWAYS_SHOW_REMAINING_DESC" = "Đảm bảo rằng thời gian còn lại luôn được hiển thị theo mặc định trong trình phát.";
+"COPY_TIMESTAMP_ON_PAUSE" = "Copy timestamped links";
+"COPY_TIMESTAMP_ON_PAUSE_DESC" = "Allows to copy timestamped link to the clipboard by pressing pause button.";
 "SHOW_REMAINING_EXTRA" = "Hiển thị thời gian dự kiến";
 "SHOW_REMAINING_EXTRA_DESC" = "Thêm thời gian kết thúc dự kiến vào nhãn trên trình phát video.";
 "HIDE_FULLSCREEN_ACTIONS" = "Ẩn các hành động Toàn màn hình";

@@ -4,11 +4,13 @@ A tweak that's try to recreate features like in YTLite as much as possible. Cont
 Thanks for 200 stars and forks! This might be the best project I've done.
 
 If you want to contribute this project, scroll down below for how to do it.
+
 ## Why I created this project?
 The reason is because of YTLite no longer free. So I'll try my best to recreate all the features as much as I can, plus alternative tweaks combined.
+
 ## Features
 This tweak can hide, remove elements and others in YouTube. Such as:
-- Downloading
+- Downloading (Currently support up to 1080p60)
 - Appearance
 - Navigation bar
 - Player
@@ -17,7 +19,7 @@ This tweak can hide, remove elements and others in YouTube. Such as:
 - And much more!
 
 ## Supported YouTube version
-Up to the latest, this is the goal of this tweak. Any versions starting from 19.x - latest.
+Up to the latest, this is the goal of this tweak. Any versions starting from 19.x - latest and running at least iOS 14.
 
 ## How to build the IPA?
 1. Click on **Sync fork**, and if your branch is out-of-date, click on **Update branch**.
@@ -48,8 +50,9 @@ This project uses GPLv3 license. See [LICENSE](https://github.com/Tonwalter888/Y
 - [YTLitePlus](https://github.com/YTLitePlus/YTLitePlus)
 - [uYouEnhanced](https://github.com/arichornlover/uYouEnhanced) - arichornlover
 - [YTweaks](https://github.com/fosterbarnes/YTweaks) - fosterbarnes
-- [daisuke1227](https://github.com/daisuke1227) - Implementing download features
-- [grohit1810](https://github.com/grohit1810) - Implementing SponsorBlock and whole new settings logic
+- [daisuke1227](https://github.com/daisuke1227) - Implementing download features and others
+- [grohit1810](https://github.com/grohit1810) - Implementing built-in SponsorBlock, whole new settings logic, and others
+- [SponsorBlock](https://sponsor.ajay.app) - SponsorBlock segments API
 - And [PoomSmart](https://github.com/PoomSmart)'s tweaks
 
 Also thanks to all the contributors in the past!

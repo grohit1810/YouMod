@@ -192,6 +192,8 @@
 "DISABLES_SHOW_REMAINING_DESC" = "Désactive la fonctionnalité qui affiche le temps restant dans une vidéo en appuyant sur l'horodatage.";
 "ALWAYS_SHOW_REMAINING" = "Toujours afficher le temps restant";
 "ALWAYS_SHOW_REMAINING_DESC" = "Affiche en permanence le temps restant par défaut dans l'interface du lecteur.";
+"COPY_TIMESTAMP_ON_PAUSE" = "Copy timestamped links";
+"COPY_TIMESTAMP_ON_PAUSE_DESC" = "Allows to copy timestamped link to the clipboard by pressing pause button.";
 "SHOW_REMAINING_EXTRA" = "Afficher le temps restant supplémentaire";
 "SHOW_REMAINING_EXTRA_DESC" = "Ajoute l'heure de fin estimée au libellé dans l'interface du lecteur.";
 "HIDE_FULLSCREEN_ACTIONS" = "Cacher les actions en plein écran";

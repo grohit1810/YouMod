@@ -194,6 +194,8 @@
 "DISABLES_SHOW_REMAINING_DESC" = "ซ่อนเวลาที่เหลือในโอเวอร์เลย์วิดีโอ";
 "ALWAYS_SHOW_REMAINING" = "แสดงเวลาที่เหลือเสมอ";
 "ALWAYS_SHOW_REMAINING_DESC" = "แสดงเวลาที่เหลือเสมอในโอเวอร์เลย์วิดีโอ";
+"COPY_TIMESTAMP_ON_PAUSE" = "คัดลอกลิงก์วิดีโอพร้อมเวลา";
+"COPY_TIMESTAMP_ON_PAUSE_DESC" = "อนุญาตให้คัดลอกลิงก์วิดีโอพร้อมเวลาปัจจุบันไปยังคลิปบอร์ดเมื่อกดปุ่มหยุดเล่น";
 "SHOW_REMAINING_EXTRA" = "แสดงเวลาที่เหลือ";
 "SHOW_REMAINING_EXTRA_DESC" = "เพิ่มเวลาที่จะเล่นจบจริงในเวลาของวิดีโอ";
 "HIDE_FULLSCREEN_ACTIONS" = "ซ่อนปุ่มในโหมดเต็มหน้าจอ";

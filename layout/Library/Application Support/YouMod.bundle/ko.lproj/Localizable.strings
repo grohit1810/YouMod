@@ -191,6 +191,8 @@
 "DISABLES_SHOW_REMAINING_DESC" = "시간 표시를 눌렀을 때 영상의 '남은 시간'으로 바뀌어 보여주는 기능을 끕니다.";
 "ALWAYS_SHOW_REMAINING" = "항상 남은 시간으로 표시";
 "ALWAYS_SHOW_REMAINING_DESC" = "영상의 현재 재생 시간 대신, 끝날 때까지 남은 시간을 기본으로 띄워둡니다.";
+"COPY_TIMESTAMP_ON_PAUSE" = "Copy timestamped links";
+"COPY_TIMESTAMP_ON_PAUSE_DESC" = "Allows to copy timestamped link to the clipboard by pressing pause button.";
 "SHOW_REMAINING_EXTRA" = "Show extra remaining time";
 "SHOW_REMAINING_EXTRA_DESC" = "Adds the estimated finish time to the label in the video overlay.";
 "HIDE_FULLSCREEN_ACTIONS" = "전체화면 빠른 동작 버튼 숨기기";
