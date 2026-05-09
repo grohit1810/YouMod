@@ -331,13 +331,13 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
 }
 
 %hook YTMainAppVideoPlayerOverlayView
-- (void)setSeekAnywherePanGestureRecognizer:(id)arg1 {
-    %orig;
+- (void)setLongPressGestureRecognizer:(id)arg1 {
     if (INTFORVAL(HoldToSpeedIndex) != 0) {
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(YouModHoldToSpeed:)];
         longPress.minimumPressDuration = 0.3;
         [self addGestureRecognizer:longPress];
-        objc_setAssociatedObject(self, @selector(YouModHoldToSpeed:), @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    } else {
+        %orig;
     }
 }
 
