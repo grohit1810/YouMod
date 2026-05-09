@@ -59,7 +59,6 @@
 "NO_AUDIO_STREAM_FOUND" = "ไม่พบสตรีมเสียง";
 "DOWNLOAD" = "ดาวน์โหลด";
 "AUDIO" = "เสียง";
-"VIDEO" = "วิดีโอ";
 "NO_VID_AUDIO_STREAM_FOUND" = "ไม่พบสตรีมวิดีโอ/เสียง";
 "COPIED_VID_INFO" = "คัดลอกข้อมูลวิดีโอเรียบร้อยแล้ว";
 "SAVED_TO_PHOTOS" = "บันทึกลงในแอปรูปภาพแล้ว";
