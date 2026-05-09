@@ -231,6 +231,9 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 - (void)YouModHoldToSpeed:(UILongPressGestureRecognizer *)gesture;
 @end
 
+@interface YTInlinePlayerScrubUserEducationView : UIView
+@end
+
 @interface YTNavigationBarTitleView : UIView
 @end
 
