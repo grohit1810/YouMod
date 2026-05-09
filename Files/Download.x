@@ -728,10 +728,6 @@ static unsigned long long YouModDurationMsForURL(NSURL *url) {
     return (unsigned long long)llround(seconds * 1000.0);
 }
 
-static NSString *YouModDurationSecondsArgument(unsigned long long durationMs) {
-    return [NSString stringWithFormat:@"%.3f", (double)durationMs / 1000.0];
-}
-
 static BOOL YouModCMTimeIsUsable(CMTime time) {
     if (!CMTIME_IS_VALID(time) || !CMTIME_IS_NUMERIC(time) || CMTIME_IS_INDEFINITE(time)) return NO;
     Float64 seconds = CMTimeGetSeconds(time);
