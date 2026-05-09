@@ -225,6 +225,8 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @end
 
 @interface YTInlinePlayerScrubUserEducationView : UIView
+@property (nonatomic, assign, readwrite) NSUInteger labelType;
+- (void)setVisible:(BOOL)visible;
 @end
 
 @interface YTMainAppVideoPlayerOverlayView (YouMod)
