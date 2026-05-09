@@ -942,6 +942,7 @@ static BOOL YouModFFmpegKitAvailable(void) {
     return ffmpegKitClass && [ffmpegKitClass respondsToSelector:@selector(executeWithArgumentsAsync:withCompleteCallback:withLogCallback:withStatisticsCallback:)];
 }
 
+/*
 static NSString *YouModFFmpegKitDiagnosticText(YouModAudioOutputFormat *outputFormat, YouModMediaFormat *sourceFormat, NSString *videoID) {
     YouModLoadFFmpegKitIfNeeded();
 
@@ -984,6 +985,7 @@ static NSString *YouModFFmpegKitDiagnosticText(YouModAudioOutputFormat *outputFo
     }
     return [lines componentsJoinedByString:@"\n"];
 }
+*/
 
 static void YouModCancelFFmpegKit(void) {
     Class ffmpegKitClass = YouModFFmpegKitClass();
