@@ -677,7 +677,7 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
         }
 
         if (IS_ENABLED(GestureHUD)) {
-            int sizeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"GestureHUDSize"] ? (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"GestureHUDSize"] : 1;
+            int sizeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:GestureHUDSize] ? (int)[[NSUserDefaults standardUserDefaults] integerForKey:GestureHUDSize] : 1;
             CGFloat fontSize = 14.0 + (sizeSetting * 2.0);
             CGFloat hudWidth = 74.0 + (sizeSetting * 10.0);
             CGFloat hudHeight = 30.0 + (sizeSetting * 4.0);
@@ -686,7 +686,7 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
             self.YouModGestureHUD.layer.cornerRadius = hudHeight / 2.0;
             self.YouModGestureHUD.font = [UIFont boldSystemFontOfSize:fontSize];
 
-            int posSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"GestureHUDPosition"] ? (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"GestureHUDPosition"] : 0;
+            int posSetting = [[NSUserDefaults standardUserDefaults] objectForKey:GestureHUDPosition] ? (int)[[NSUserDefaults standardUserDefaults] integerForKey:GestureHUDPosition] : 0;
             CGFloat viewHeight = self.view.bounds.size.height;
             CGFloat centerY = viewHeight / 6.0;
             if (posSetting == 1) centerY = viewHeight / 2.0;

@@ -1,5 +1,4 @@
 // Adapted from YouPiP by PoomSmart
-// Try to make this work in newer YT versions
 // This research based on YT version 21.06.2
 #import "Headers.h"
 

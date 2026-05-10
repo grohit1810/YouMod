@@ -946,7 +946,7 @@ static NSArray *YouModAdaptiveFormatObjectsForPlayer(YTPlayerViewController *pla
 static YouModMediaFormat *YouModMediaFormatFromStream(id stream, BOOL video) {
     id formatStream = YouModObjectFromSelector(stream, @selector(formatStream));
     NSString *url = YouModStringFromSelector(stream, @selector(URL));
-     if (url.length == 0) url = YouModStringFromSelector(formatStream, @selector(URL));
+    if (url.length == 0) url = YouModStringFromSelector(formatStream, @selector(URL));
     if (url.length == 0) url = YouModStringFromSelector(stream, @selector(url));
     if (url.length == 0) url = YouModStringFromSelector(formatStream, @selector(url));
     if (url.length == 0) return nil;

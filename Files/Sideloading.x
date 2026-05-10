@@ -30,7 +30,6 @@ static NSString *accessGroupID() {
 - (void)didMoveToWindow {
     %orig;
     YouModConfigureDownloadButton(self);
-    // if (IS_ENABLED(HideShortsShelf) && [self.accessibilityIdentifier isEqualToString:@"eml.shorts-shelf"]) self.hidden = YES;
     if (IS_ENABLED(HideGenMusicShelf) && [self.accessibilityIdentifier isEqualToString:@"feed_nudge.view"]) self.hidden = YES;
     if (IS_ENABLED(HideFeedPost) && [self.accessibilityIdentifier isEqualToString:@"id.ui.backstage.original_post"]) self.hidden = YES;
     if (IS_ENABLED(HideLikeButton) && [self.accessibilityIdentifier isEqualToString:@"id.video.like.button"]) self.hidden = YES;
