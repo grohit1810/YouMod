@@ -94,10 +94,12 @@ static NSBundle *YouModBundle() {
 }
 %end
 
+/*
 %hook YTBubbleHintView
-- (id)initWithTargetView:(id)arg1 hintText:(id)arg2 detailsText:(id)arg3 acceptButton:(id)arg4 dismissButton:(id)arg5 maxWidth:(CGFloat)arg6 preferredPosition:(int)arg7 margin:(CGFloat)arg8 { return nil; }
-- (void)setHintViewDelegate:(id)arg {}
+- (id)initWithTargetView:(id)arg1 hintText:(id)arg2 detailsText:(id)arg3 acceptButton:(id)arg4 dismissButton:(id)arg5 maxWidth:(CGFloat)arg6 preferredPosition:(int)arg7 margin:(CGFloat)arg8 { return IS_ENABLED(DisablesBlueBoxHint) ? nil : %orig; }
+- (void)setHintViewDelegate:(id)arg { if (!IS_ENABLED(DisablesBlueBoxHint)) %orig; }
 %end
+*/
 
 // Hide Tab Bar Indicators
 %hook YTPivotBarIndicatorView
@@ -127,5 +129,14 @@ BOOL isTabSelected = NO;
         isTabSelected = YES;
     }
 }
-- (BOOL)isFrostedPivotBarPermitted { return IS_ENABLED(HideTabLabels); }
+/*
+- (BOOL)isFrostedPivotBarPermitted {
+    if (INTFORVAL(UseFrostedTabBar) == 1) {
+        return YES;
+    } else if (INTFORVAL(UseFrostedTabBar) == 2) {
+        return NO;
+    }
+    return %orig;
+}
+*/
 %end
