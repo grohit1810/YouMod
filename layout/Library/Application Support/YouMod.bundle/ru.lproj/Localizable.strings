@@ -280,7 +280,7 @@
 "DEFAULT_TAB" = "Вкладка по умолчанию при запуске";
 "DEFAULT_TAB_DESC" = "Вы можете выбрать вкладку, которая будет открываться при запуске приложения.";
 "FORSTED_TAB_BAR" = "Translucent tab bar";
-"ENABLED" = "Enabled"
+"ENABLED" = "Enabled";
 "HOME_NAME" = "Главная";
 "SUBSCRIPT_NAME" = "Подписки";
 "LIB_NAME" = "Библиотека (Вы)";
