@@ -47,8 +47,8 @@ static void YouModMakeAShortsAction(YTPlayerViewController *self, YTSingleVideoC
             YTReelPlayerViewController *reelVC = (YTReelPlayerViewController *)self.parentViewController;
             if ([reelVC respondsToSelector:@selector(reelContentViewRequestsAdvanceToNextVideo:)] && INTFORVAL(ShortsActionIndex) == 1) {
                 [reelVC performSelector:@selector(reelContentViewRequestsAdvanceToNextVideo:)];
-            } else if ([reelVC respondsToSelector:@selector(reelContentViewRequestsSuspendPlayback:)] && INTFORVAL(ShortsActionIndex) == 2) {
-                [reelVC performSelector:@selector(reelContentViewRequestsSuspendPlayback:) withObject:nil afterDelay:0.1];
+            } else if ([reelVC respondsToSelector:@selector(pause)] && INTFORVAL(ShortsActionIndex) == 2) {
+                [reelVC performSelector:@selector(pause)];
             }
         }
     }
