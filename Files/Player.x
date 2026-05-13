@@ -488,8 +488,8 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
 
 %new
 - (void)YouModShortsToRegular {
-    if (self.videoId != nil && [self.parentViewController isKindOfClass:NSClassFromString(@"YTReelPlayerViewController")]) {
-        NSString *vidLink = [NSString stringWithFormat:@"vnd.youtube://%@", self.videoId];
+    if (self.contentVideoID != nil && [self.parentViewController isKindOfClass:NSClassFromString(@"YTReelPlayerViewController")]) {
+        NSString *vidLink = [NSString stringWithFormat:@"vnd.youtube://%@", self.contentVideoID];
         if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:vidLink]]) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:vidLink] options:@{} completionHandler:nil];
         }
