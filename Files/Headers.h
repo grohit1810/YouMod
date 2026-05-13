@@ -34,7 +34,7 @@
 #import <YouTubeHeader/YTSingleVideoTime.h>
 #import <YouTubeHeader/YTSingleVideoController.h>
 #import <YouTubeHeader/YTPlayerView.h>
-// #import <YouTubeHeader/YTReelPlayerViewController.h>
+#import <YouTubeHeader/YTReelPlayerViewController.h>
 #import <YouTubeHeader/YTLabel.h>
 #import <YouTubeHeader/MLFormat.h>
 #import <YouTubeHeader/MLQuickMenuVideoQualitySettingFormatConstraint.h>
@@ -163,11 +163,12 @@
 #define HideShortsToVideo @"YouModHideShortsToVideo"
 #define EnablesShortsQuality @"YouModEnablesShortsQuality"
 #define ShowShortsSeekbar @"YouModShowShortsSeekbar"
-// #define ShortsActionIndex @"YouModMakeAShortsAction"
+#define ShortsActionIndex @"YouModMakeAShortsAction"
 // Tab bar
 #define DefaultTab @"YouModDefaultStartupTab"
 #define HideTabIndi @"YouModHideTabIndicators"
 #define HideTabLabels @"YouModHideTabLabels"
+#define UseFrostedTabBar @"YouModUseFrostedTabBar"
 #define HideHomeTab @"YouModHideHomeTab"
 #define HideShortsTab @"YouModHideShortsTab"
 #define HideCreateButton @"YouModHideCreateButton"
@@ -267,7 +268,7 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @interface YTPlayerViewController (YouMod) <UIGestureRecognizerDelegate>
 @property (nonatomic, retain) UIPanGestureRecognizer *YouModPanGesture;
 @property (nonatomic, retain) UILabel *YouModGestureHUD;
-// @property (nonatomic, weak, readwrite) UIViewController *parentViewController;
+@property (nonatomic, weak, readwrite) UIViewController *parentViewController;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer;
 - (void)YouModAutoFullscreen;
 - (void)YouModTurnOffCaptions;
@@ -357,12 +358,10 @@ typedef NS_ENUM(NSUInteger, GestureSection) {
 @interface YTGLMediaPlayerViewFactory : NSObject
 @end
 
-/*
 @interface YTReelPlayerViewController (YouMod)
 - (void)reelContentViewRequestsAdvanceToNextVideo:(id)arg;
 - (void)reelContentViewRequestsSuspendPlayback:(id)arg;
 @end
-*/
 
 // SponsorBlock action modes
 typedef NS_ENUM(NSInteger, SBSegmentAction) {

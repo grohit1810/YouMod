@@ -94,13 +94,6 @@ static NSBundle *YouModBundle() {
 }
 %end
 
-/*
-%hook YTBubbleHintView
-- (id)initWithTargetView:(id)arg1 hintText:(id)arg2 detailsText:(id)arg3 acceptButton:(id)arg4 dismissButton:(id)arg5 maxWidth:(CGFloat)arg6 preferredPosition:(int)arg7 margin:(CGFloat)arg8 { return IS_ENABLED(DisablesBlueBoxHint) ? nil : %orig; }
-- (void)setHintViewDelegate:(id)arg { if (!IS_ENABLED(DisablesBlueBoxHint)) %orig; }
-%end
-*/
-
 // Hide Tab Bar Indicators
 %hook YTPivotBarIndicatorView
 - (void)setFillColor:(id)arg1 { IS_ENABLED(HideTabIndi) ? %orig([UIColor clearColor]) : %orig; }
@@ -129,7 +122,7 @@ BOOL isTabSelected = NO;
         isTabSelected = YES;
     }
 }
-/*
+// Translucent tab bar
 - (BOOL)isFrostedPivotBarPermitted {
     if (INTFORVAL(UseFrostedTabBar) == 1) {
         return YES;
@@ -138,5 +131,4 @@ BOOL isTabSelected = NO;
     }
     return %orig;
 }
-*/
 %end

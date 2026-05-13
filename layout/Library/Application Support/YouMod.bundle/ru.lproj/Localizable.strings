@@ -235,6 +235,10 @@
 "HIDE_SAVE_BUTTON_DESC" = "Скрыть кнопку «Сохранить» на панели действий под видео.";
 
 "SHORTS" = "Shorts";
+"SHORTS_ACTION" = "Shorts action after the video ends";
+"LOOP" = "Loop video";
+"SKIP_TO_NEXT_SHORTS" = "Skip to next video";
+"PAUSE_SHORTS" = "Stop video";
 "HIDE_SHORTS_HEADER" = "Hide Shorts header";
 "HIDE_SHORTS_HEADER_DESC" = "Hide Shorts header that is on top of the Shorts player.";
 "HIDE_SHORTS_LIKE_BUTTON" = "Скрыть кнопку «Нравится»";
@@ -275,6 +279,8 @@
 "TABBAR" = "Панель вкладок";
 "DEFAULT_TAB" = "Вкладка по умолчанию при запуске";
 "DEFAULT_TAB_DESC" = "Вы можете выбрать вкладку, которая будет открываться при запуске приложения.";
+"FORSTED_TAB_BAR" = "Translucent tab bar";
+"ENABLED" = "Enabled"
 "HOME_NAME" = "Главная";
 "SUBSCRIPT_NAME" = "Подписки";
 "LIB_NAME" = "Библиотека (Вы)";

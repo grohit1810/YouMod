@@ -308,6 +308,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
     // Shorts
     YTSettingsSectionItem *shortsgroup = [YTSettingsSectionItemClass itemWithTitle:LOC(@"SHORTS") accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
         YMPushSubSettings(LOC(@"SHORTS"), @[
+            YMTextSegment(LOC(@"SHORTS_ACTION"), ShortsActionIndex, (@[LOC(@"LOOP"), LOC(@"SKIP_TO_NEXT_SHORTS"), LOC(@"PAUSE_SHORTS")]), 0),
             YMToggle(LOC(@"HIDE_SHORTS_HEADER"), LOC(@"HIDE_SHORTS_HEADER_DESC"), HideShortsHeader),
             YMToggle(LOC(@"HIDE_SHORTS_LIKE_BUTTON"), LOC(@"HIDE_SHORTS_LIKE_BUTTON_DESC"), HideShortsLikeButton),
             YMToggle(LOC(@"HIDE_SHORTS_DISLIKE_BUTTON"), LOC(@"HIDE_SHORTS_DISLIKE_BUTTON_DESC"), HideShortsDisLikeButton),
@@ -339,6 +340,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
     YTSettingsSectionItem *tabgroup = [YTSettingsSectionItemClass itemWithTitle:LOC(@"TABBAR") accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
         YMPushSubSettings(LOC(@"TABBAR"), @[
             YMSegment(LOC(@"DEFAULT_TAB"), DefaultTab, (@[@(65), @(769), @(66), @(61)]), 0),
+            YMTextSegment(LOC(@"FORSTED_TAB_BAR"), UseFrostedTabBar, (@[LOC(@"DEFAULT"),LOC(@"ENABLED"), LOC(@"DISABLED")]), 0),
             YMToggle(LOC(@"HIDE_TAB_INDI"), LOC(@"HIDE_TAB_INDI_DESC"), HideTabIndi),
             YMToggle(LOC(@"HIDE_TAB_LABELS"), LOC(@"HIDE_TAB_LABELS_DESC"), HideTabLabels),
             YMToggle(LOC(@"HIDE_HOME_TAB"), LOC(@"HIDE_HOME_TAB_DESC"), HideHomeTab),

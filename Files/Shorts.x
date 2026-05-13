@@ -39,7 +39,6 @@
 - (void)setTitleLabelVisible:(BOOL)arg1 animated:(BOOL)arg2 { IS_ENABLED(HideShortsHeader) ? %orig(NO, arg2) : %orig; }
 %end
 
-/*
 static void YouModMakeAShortsAction(YTPlayerViewController *self, YTSingleVideoController *video, YTSingleVideoTime *time) {
     if (INTFORVAL(ShortsActionIndex) == 0) return;
 
@@ -65,4 +64,3 @@ static void YouModMakeAShortsAction(YTPlayerViewController *self, YTSingleVideoC
     YouModMakeAShortsAction(self, video, time);
 }
 %end
-*/

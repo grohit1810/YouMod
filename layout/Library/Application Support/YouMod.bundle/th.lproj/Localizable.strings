@@ -235,6 +235,10 @@
 "HIDE_SAVE_BUTTON_DESC" = "ซ่อนปุ่มบันทึกใต้โอเวอร์เลย์วิดีโอ";
 
 "SHORTS" = "Shorts";
+"SHORTS_ACTION" = "การกระทำของ Shorts เมื่อจบวิดีโอ";
+"LOOP" = "ลูปวิดีโอ";
+"SKIP_TO_NEXT_SHORTS" = "ข้ามไปยังวิดีโอถัดไป";
+"PAUSE_SHORTS" = "หยุดวิดีโอ";
 "HIDE_SHORTS_HEADER" = "ซ่อนส่วนหัวของ Shorts";
 "HIDE_SHORTS_HEADER_DESC" = "ซ่อนส่วนหัวของ Shorts ที่อยู่ด้านบนเครื่องเล่น Shorts";
 "HIDE_SHORTS_LIKE_BUTTON" = "ซ่อนปุ่มถูกใจ";
@@ -275,6 +279,8 @@
 "TABBAR" = "แท็บนำทาง";
 "DEFAULT_TAB" = "แท็บเริ่มต้น";
 "DEFAULT_TAB_DESC" = "คุณสามารถเลือกแท็บที่จะเปิดเมื่อเริ่มแอปได้";
+"FORSTED_TAB_BAR" = "แท็บโปร่งใส";
+"ENABLED" = "เปิดใช้งาน";
 "HOME_NAME" = "หน้าแรก";
 "SUBSCRIPT_NAME" = "การติดตาม";
 "LIB_NAME" = "คลัง (คุณ)";
@@ -301,7 +307,7 @@
 "HISTORY_TAB" = "ประวัติการเข้าชม";
 "GAMING_TAB" = "เกม";
 "SPORTS_TAB" = "กีฬา";
-"NOTI_TAB" = "การแจ้งเดือน";
+"NOTI_TAB" = "การแจ้งเตือน";
 
 "MISCELLANEOUS" = "อื่นๆ";
 "BACKGROUND_PLAYBACK" = "เล่นภายในเบื้องหลัง";
