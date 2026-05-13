@@ -280,7 +280,7 @@
 "DEFAULT_TAB" = "Scheda di avvio predefinita";
 "DEFAULT_TAB_DESC" = "Puoi selezionare la scheda che desideri visualizzare all'apertura dell'app.";
 "FORSTED_TAB_BAR" = "Translucent tab bar";
-"ENABLED" = "Enabled"
+"ENABLED" = "Enabled";
 "HOME_NAME" = "Home";
 "SUBSCRIPT_NAME" = "Iscrizioni";
 "LIB_NAME" = "Raccolta (Tu)";
