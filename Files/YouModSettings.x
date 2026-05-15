@@ -3,6 +3,17 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
+static NSBundle *YMSettingsBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"];
+        if (path) bundle = [NSBundle bundleWithPath:path];
+    });
+    return bundle;
+}
+#define YMLOC(x) [YMSettingsBundle() localizedStringForKey:x value:nil table:nil]
+
 #pragma mark - Data Model
 
 typedef NS_ENUM(NSInteger, YMRowType) {
@@ -11,7 +22,8 @@ typedef NS_ENUM(NSInteger, YMRowType) {
     YMRowTypeAction,
     YMRowTypeHeader,
     YMRowTypeSegment,
-    YMRowTypeTextSegment
+    YMRowTypeTextSegment,
+    YMRowTypeImageSegment
 };
 
 @interface YMSettingsItem : NSObject
@@ -24,12 +36,14 @@ typedef NS_ENUM(NSInteger, YMRowType) {
 @property (nonatomic, copy) void (^action)(UIViewController *vc);
 @property (nonatomic, strong) NSArray<NSNumber *> *segmentIcons;
 @property (nonatomic, strong) NSArray<NSString *> *segmentLabels;
+@property (nonatomic, strong) NSArray<UIImage *> *segmentImages;
 + (instancetype)toggleWithTitle:(NSString *)title subtitle:(NSString *)subtitle key:(NSString *)key;
 + (instancetype)pickerWithTitle:(NSString *)title subtitle:(NSString *)subtitle key:(NSString *)key options:(NSArray<NSString *> *)options defaultValue:(NSInteger)defaultValue;
 + (instancetype)actionWithTitle:(NSString *)title subtitle:(NSString *)subtitle action:(void (^)(UIViewController *vc))action;
 + (instancetype)headerWithTitle:(NSString *)title;
 + (instancetype)segmentWithTitle:(NSString *)title key:(NSString *)key icons:(NSArray<NSNumber *> *)icons defaultValue:(NSInteger)defaultValue;
 + (instancetype)textSegmentWithTitle:(NSString *)title key:(NSString *)key labels:(NSArray<NSString *> *)labels defaultValue:(NSInteger)defaultValue;
++ (instancetype)imageSegmentWithTitle:(NSString *)title key:(NSString *)key images:(NSArray<UIImage *> *)images defaultValue:(NSInteger)defaultValue;
 @end
 
 @implementation YMSettingsItem
@@ -86,6 +100,16 @@ typedef NS_ENUM(NSInteger, YMRowType) {
     item.title = title;
     item.key = key;
     item.segmentLabels = labels;
+    item.pickerDefault = defaultValue;
+    return item;
+}
+
++ (instancetype)imageSegmentWithTitle:(NSString *)title key:(NSString *)key images:(NSArray<UIImage *> *)images defaultValue:(NSInteger)defaultValue {
+    YMSettingsItem *item = [[YMSettingsItem alloc] init];
+    item.type = YMRowTypeImageSegment;
+    item.title = title;
+    item.key = key;
+    item.segmentImages = images;
     item.pickerDefault = defaultValue;
     return item;
 }
@@ -202,6 +226,8 @@ static const void *kYMSwitchKeyAssoc = &kYMSwitchKeyAssoc;
         return [self segmentCellForItem:item tableView:tableView];
     } else if (item.type == YMRowTypeTextSegment) {
         return [self textSegmentCellForItem:item tableView:tableView];
+    } else if (item.type == YMRowTypeImageSegment) {
+        return [self imageSegmentCellForItem:item tableView:tableView];
     }
     return [self pickerCellForItem:item tableView:tableView];
 }
@@ -399,6 +425,59 @@ static const void *kYMSwitchKeyAssoc = &kYMSwitchKeyAssoc;
     return cell;
 }
 
+#pragma mark - Image Segment Cell
+
+- (UITableViewCell *)imageSegmentCellForItem:(YMSettingsItem *)item tableView:(UITableView *)tableView {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = item.title;
+    titleLabel.textColor = [self ymTextColor];
+    titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [cell.contentView addSubview:titleLabel];
+
+    NSMutableArray *segItems = [NSMutableArray array];
+    for (NSUInteger i = 0; i < item.segmentImages.count; i++) {
+        [segItems addObject:@""];
+    }
+    UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:segItems];
+
+    for (NSInteger i = 0; i < (NSInteger)item.segmentImages.count; i++) {
+        UIImage *img = item.segmentImages[i];
+        if (img) [segment setImage:img forSegmentAtIndex:i];
+    }
+
+    id storedVal = [[NSUserDefaults standardUserDefaults] objectForKey:item.key];
+    NSInteger idx = storedVal ? [storedVal integerValue] : item.pickerDefault;
+    segment.selectedSegmentIndex = MAX(0, MIN(idx, segment.numberOfSegments - 1));
+    segment.backgroundColor = [UIColor colorWithRed:0.13 green:0.13 blue:0.13 alpha:1.0];
+    segment.selectedSegmentTintColor = [UIColor colorWithRed:0.25 green:0.25 blue:0.25 alpha:1.0];
+    segment.layer.cornerRadius = 8.0;
+    segment.clipsToBounds = YES;
+
+    objc_setAssociatedObject(segment, kYMSwitchKeyAssoc, item.key, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [segment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
+
+    segment.translatesAutoresizingMaskIntoConstraints = NO;
+    [cell.contentView addSubview:segment];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [titleLabel.leadingAnchor constraintEqualToAnchor:cell.contentView.leadingAnchor constant:16],
+        [titleLabel.topAnchor constraintEqualToAnchor:cell.contentView.topAnchor constant:12],
+
+        [segment.leadingAnchor constraintEqualToAnchor:cell.contentView.leadingAnchor constant:16],
+        [segment.trailingAnchor constraintEqualToAnchor:cell.contentView.trailingAnchor constant:-16],
+        [segment.topAnchor constraintEqualToAnchor:titleLabel.bottomAnchor constant:10],
+        [segment.bottomAnchor constraintEqualToAnchor:cell.contentView.bottomAnchor constant:-12],
+        [segment.heightAnchor constraintEqualToConstant:36]
+    ]];
+
+    return cell;
+}
+
 #pragma mark - Picker Cell
 
 - (UITableViewCell *)pickerCellForItem:(YMSettingsItem *)item tableView:(UITableView *)tableView {
@@ -501,6 +580,10 @@ YMSettingsItem *YMTextSegment(NSString *title, NSString *key, NSArray<NSString *
     return [YMSettingsItem textSegmentWithTitle:title key:key labels:labels defaultValue:defaultValue];
 }
 
+YMSettingsItem *YMImageSegment(NSString *title, NSString *key, NSArray<UIImage *> *images, NSInteger defaultValue) {
+    return [YMSettingsItem imageSegmentWithTitle:title key:key images:images defaultValue:defaultValue];
+}
+
 #pragma mark - YMTabOrderViewController
 
 static NSString * const kYMTabIDs[] = {
@@ -533,16 +616,15 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
 - (void)setInitialSnapshot:(NSArray *)snap { objc_setAssociatedObject(self, kYMTabSnapshotKey, snap, OBJC_ASSOCIATION_RETAIN_NONATOMIC); }
 
 - (NSString *)localizedNameForTabID:(NSString *)tabID {
-    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
-    if ([tabID isEqualToString:@"home"]) return @"Home";
-    if ([tabID isEqualToString:@"shorts"]) return @"Shorts";
-    if ([tabID isEqualToString:@"create"]) return @"Create";
-    if ([tabID isEqualToString:@"subscriptions"]) return @"Subscriptions";
-    if ([tabID isEqualToString:@"library"]) return @"Library";
-    if ([tabID isEqualToString:@"history"]) return [bundle localizedStringForKey:@"HISTORY_TAB" value:@"History" table:nil];
-    if ([tabID isEqualToString:@"gaming"]) return [bundle localizedStringForKey:@"GAMING_TAB" value:@"Gaming" table:nil];
-    if ([tabID isEqualToString:@"sports"]) return [bundle localizedStringForKey:@"SPORTS_TAB" value:@"Sports" table:nil];
-    if ([tabID isEqualToString:@"notifications"]) return [bundle localizedStringForKey:@"NOTI_TAB" value:@"Notifications" table:nil];
+    if ([tabID isEqualToString:@"home"]) return YMLOC(@"HOME_TAB");
+    if ([tabID isEqualToString:@"shorts"]) return YMLOC(@"SHORTS_TAB");
+    if ([tabID isEqualToString:@"create"]) return YMLOC(@"CREATE_TAB");
+    if ([tabID isEqualToString:@"subscriptions"]) return YMLOC(@"SUBSCRIPTIONS_TAB");
+    if ([tabID isEqualToString:@"library"]) return YMLOC(@"LIBRARY_TAB");
+    if ([tabID isEqualToString:@"history"]) return YMLOC(@"HISTORY_TAB");
+    if ([tabID isEqualToString:@"gaming"]) return YMLOC(@"GAMING_TAB");
+    if ([tabID isEqualToString:@"sports"]) return YMLOC(@"SPORTS_TAB");
+    if ([tabID isEqualToString:@"notifications"]) return YMLOC(@"NOTI_TAB");
     return tabID;
 }
 
@@ -551,7 +633,7 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
     struct objc_super superStruct = { self, ytStyled ?: [UIViewController class] };
     ((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&superStruct, @selector(viewDidLoad));
 
-    self.title = @"Manage Tabs";
+    self.title = YMLOC(@"MANAGE_TABS");
     [self loadTabData];
     [self takeSnapshot];
 
@@ -592,9 +674,9 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     exit(0);
                 });
-            } actionTitle:@"Restart Now"];
-            alert.title = @"Restart Required";
-            alert.subtitle = @"Tab bar changes require a restart to take effect.";
+            } actionTitle:YMLOC(@"RESTART_NOW")];
+            alert.title = YMLOC(@"RESTART_REQUIRED");
+            alert.subtitle = YMLOC(@"RESTART_REQUIRED_DESC");
             [alert show];
         }
     }
@@ -752,8 +834,8 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
         Class alertClass = NSClassFromString(@"YTAlertView");
         if (alertClass) {
             YTAlertView *alert = [alertClass infoDialog];
-            alert.title = @"Tab Limit";
-            alert.subtitle = [NSString stringWithFormat:@"Maximum %ld tabs allowed.", (long)kYMTabMaxEnabled];
+            alert.title = YMLOC(@"TAB_LIMIT");
+            alert.subtitle = YMLOC(@"TAB_LIMIT_DESC");
             [alert show];
         }
         return;
@@ -785,7 +867,7 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
 #pragma mark - Section Header/Footer
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Drag to reorder. Toggle to show/hide.";
+    return YMLOC(@"TAB_REORDER_HINT");
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section { return 0; }

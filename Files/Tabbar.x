@@ -165,9 +165,25 @@ BOOL isTabSelected = NO;
 - (void)viewDidAppear:(BOOL)animated {
     %orig;
     if (!isTabSelected) {
-        NSArray *pivotIdentifiers = @[@"FEwhat_to_watch", @"FEshorts", @"FEsubscriptions", @"FElibrary"];
+        // Build pivot identifiers from enabled tabs (skip Create — matches Settings.x segment logic)
+        NSMutableArray *pivotIdentifiers = [NSMutableArray array];
+        NSArray *savedOrder = [[NSUserDefaults standardUserDefaults] arrayForKey:@"YouModTabOrder"];
+        if (savedOrder.count > 0) {
+            for (NSDictionary *entry in savedOrder) {
+                if (![entry[@"enabled"] boolValue]) continue;
+                NSString *tabID = entry[@"id"];
+                if ([tabID isEqualToString:@"create"]) continue;
+                NSString *pivot = ymPivotIDForTabID(tabID);
+                if (pivot) [pivotIdentifiers addObject:pivot];
+            }
+        }
+        if (pivotIdentifiers.count == 0) {
+            pivotIdentifiers = [@[@"FEwhat_to_watch", @"FEshorts", @"FEsubscriptions", @"FElibrary"] mutableCopy];
+        }
+
         NSInteger tabIndex = INTFORVAL(DefaultTab);
-        if (tabIndex < 0 || tabIndex >= (NSInteger)pivotIdentifiers.count) tabIndex = 0;
+        if (tabIndex < 0) tabIndex = 0;
+        if (tabIndex >= (NSInteger)pivotIdentifiers.count) tabIndex = MAX(0, (NSInteger)pivotIdentifiers.count - 1);
         [self selectItemWithPivotIdentifier:pivotIdentifiers[tabIndex]];
         isTabSelected = YES;
     }

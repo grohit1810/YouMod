@@ -384,3 +384,22 @@
 "SB_SECTION_MAIN" = "Main";
 "SB_SKIP_ALERT_DURATION" = "Skip Alert Duration";
 "SB_UNSKIP_ALERT_DURATION" = "Unskip Alert Duration";
+// Tab Management
+"HOME_TAB" = "Home";
+"SHORTS_TAB" = "Shorts";
+"CREATE_TAB" = "Create";
+"SUBSCRIPTIONS_TAB" = "Subscriptions";
+"LIBRARY_TAB" = "Library";
+"MANAGE_TABS" = "Manage Tabs";
+"MANAGE_TABS_DESC" = "Reorder and toggle tabs";
+"TAB_REORDER_HINT" = "Drag to reorder. Toggle to show/hide.";
+"TAB_LIMIT" = "Tab Limit";
+"TAB_LIMIT_DESC" = "Maximum 6 tabs allowed.";
+"RESTART_REQUIRED" = "Restart Required";
+"RESTART_REQUIRED_DESC" = "Tab bar changes require a restart to take effect.";
+"RESTART_NOW" = "Restart Now";
+
+// Download Progress
+"CANCEL_DOWNLOAD" = "Cancel Download";
+"CANCEL_DOWNLOAD_TITLE" = "Cancel Download?";
+"CANCEL_DOWNLOAD_DESC" = "The download will be stopped.";

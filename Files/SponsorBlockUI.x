@@ -1,6 +1,17 @@
 #import "Headers.h"
 #import <objc/message.h>
 
+static NSBundle *SBUIBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"];
+        if (path) bundle = [NSBundle bundleWithPath:path];
+    });
+    return bundle;
+}
+#define SBLOC(x) [SBUIBundle() localizedStringForKey:x value:nil table:nil]
+
 #pragma mark - SBSkipNotificationView Implementation
 
 @implementation SBSkipNotificationView
@@ -413,9 +424,9 @@
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf.onCancel) strongSelf.onCancel();
             [strongSelf dismiss];
-        } actionTitle:@"Cancel Download"];
-        alert.title = @"Cancel Download?";
-        alert.subtitle = @"The download will be stopped.";
+        } actionTitle:SBLOC(@"CANCEL_DOWNLOAD")];
+        alert.title = SBLOC(@"CANCEL_DOWNLOAD_TITLE");
+        alert.subtitle = SBLOC(@"CANCEL_DOWNLOAD_DESC");
         [alert show];
     } else if (self.onCancel) {
         self.onCancel();
