@@ -20,12 +20,13 @@ static NSBundle *YouModBundle() {
 // Tab icons
 %hook YTAppPivotBarItemStyle
 - (UIImage *)pivotBarItemIconImageWithIconType:(int)type color:(UIColor *)color useNewIcons:(BOOL)isNew selected:(BOOL)isSelected {
-    if (type == 1 || type == 2 || type == 3 || type == 4) {
+    if (type == 1 || type == 2 || type == 3 || type == 4 || type == 5) {
         NSString *imageName;
         if (type == 1) imageName = isSelected ? @"icons/history_selected" : @"icons/history";
         else if (type == 2) imageName = isSelected ? @"icons/gaming_selected" : @"icons/gaming";
         else if (type == 3) imageName = isSelected ? @"icons/sports_selected" : @"icons/sports";
         else if (type == 4) imageName = isSelected ? @"icons/noti_selected" : @"icons/noti";
+        else if (type == 5) imageName = isSelected ? @"icons/news_selected" : @"icons/news";
         YTAssetLoader *al = [[%c(YTAssetLoader) alloc] initWithBundle:YouModBundle()];
         return [al imageNamed:imageName];
     }
@@ -43,6 +44,7 @@ static NSString *ymPivotIDForTabID(NSString *tabID) {
     if ([tabID isEqualToString:@"gaming"]) return [%c(YTIBrowseRequest) browseIDForGamingDestination];
     if ([tabID isEqualToString:@"sports"]) return [%c(YTIBrowseRequest) browseIDForSportsDestination];
     if ([tabID isEqualToString:@"notifications"]) return [%c(YTIBrowseRequest) browseIDForNotificationsInbox];
+    if ([tabID isEqualToString:@"news"]) return @"FEnews_destination";
     return nil;
 }
 
@@ -51,6 +53,7 @@ static NSInteger ymIconTypeForTabID(NSString *tabID) {
     if ([tabID isEqualToString:@"gaming"]) return 2;
     if ([tabID isEqualToString:@"sports"]) return 3;
     if ([tabID isEqualToString:@"notifications"]) return 4;
+    if ([tabID isEqualToString:@"news"]) return 5;
     return 0;
 }
 
@@ -59,12 +62,13 @@ static NSString *ymTitleForTabID(NSString *tabID) {
     if ([tabID isEqualToString:@"gaming"]) return LOC(@"GAMING_TAB");
     if ([tabID isEqualToString:@"sports"]) return LOC(@"SPORTS_TAB");
     if ([tabID isEqualToString:@"notifications"]) return LOC(@"NOTI_TAB");
+    if ([tabID isEqualToString:@"news"]) return LOC(@"NEWS_TAB");
     return nil;
 }
 
 %hook YTPivotBarView
 - (void)setRenderer:(YTIPivotBarRenderer *)renderer {
-    NSArray *savedOrder = [[NSUserDefaults standardUserDefaults] arrayForKey:@"YouModTabOrder"];
+    NSArray *savedOrder = [[NSUserDefaults standardUserDefaults] arrayForKey:TabOrder];
 
     if (savedOrder.count > 0) {
         NSMutableArray <YTIPivotBarSupportedRenderers *> *items = [renderer itemsArray];
@@ -167,7 +171,7 @@ BOOL isTabSelected = NO;
     if (!isTabSelected) {
         // Build pivot identifiers from enabled tabs (skip Create — matches Settings.x segment logic)
         NSMutableArray *pivotIdentifiers = [NSMutableArray array];
-        NSArray *savedOrder = [[NSUserDefaults standardUserDefaults] arrayForKey:@"YouModTabOrder"];
+        NSArray *savedOrder = [[NSUserDefaults standardUserDefaults] arrayForKey:TabOrder];
         if (savedOrder.count > 0) {
             for (NSDictionary *entry in savedOrder) {
                 if (![entry[@"enabled"] boolValue]) continue;

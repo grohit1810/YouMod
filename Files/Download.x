@@ -1324,7 +1324,7 @@ static void YouModPresentMenu(NSString *title, NSArray <YouModMenuItem *> *items
     self.cancelled = YES;
     if (self.progressPill) { [self.progressPill dismiss]; self.progressPill = nil; }
     [self cleanupTemporaryFiles];
-    if (message.length) YouModSendToast(message, self.presenter);
+    if (message.length) YouModSendError(message);
 }
 
 - (void)cleanupTemporaryFiles {
@@ -1843,37 +1843,19 @@ static void YouModShowAudioSourceSheet(YTPlayerViewController *player, YouModAud
     NSArray <YouModMediaFormat *> *audioFormats = YouModFormatsForPlayer(player, NO);
     NSString *title = YouModTitleForPlayer(player);
     NSString *videoID = YouModVideoIDForPlayer(player);
-    NSMutableArray *items = [NSMutableArray array];
 
     if (audioFormats.count == 0) {
-        if (items.count) {
-            YouModPresentMenu(LOC(@"DOWNLOAD_AUDIO"), items, presenter, sender);
-            return;
-        }
         YouModSendToast(LOC(@"NO_AUDIO_STREAM_FOUND"), presenter);
         return;
     }
 
-    NSUInteger index = 1;
-    for (YouModMediaFormat *format in audioFormats) {
-        NSString *rowTitle = audioFormats.count == 1 ? LOC(@"AUDIO") : [NSString stringWithFormat:@"%@ %lu", LOC(@"AUDIO"), (unsigned long)index++];
-        NSString *subtitle = YouModFormatSubtitle(format);
-        [items addObject:[YouModMenuItem itemWithTitle:rowTitle subtitle:subtitle icon:YouModIconImage(21) handler:^{
-            [[YouModDownloadCoordinator sharedCoordinator] startAudioDownloadWithAudioFormat:format fileName:title videoID:videoID outputFormat:outputFormat presenter:presenter];
-        }]];
-    }
-    NSString *menuTitle = outputFormat.title.length ? [NSString stringWithFormat:@"%@ %@", LOC(@"DOWNLOAD"), outputFormat.title] : LOC(@"DOWNLOAD_AUDIO");
-    YouModPresentMenu(menuTitle, items, presenter, sender);
+    YouModMediaFormat *bestFormat = audioFormats.firstObject;
+    [[YouModDownloadCoordinator sharedCoordinator] startAudioDownloadWithAudioFormat:bestFormat fileName:title videoID:videoID outputFormat:outputFormat presenter:presenter];
 }
 
 static void YouModShowAudioSheet(YTPlayerViewController *player, UIViewController *presenter, UIView *sender) {
-    NSMutableArray *items = [NSMutableArray array];
-    for (YouModAudioOutputFormat *format in YouModAudioOutputFormats()) {
-        [items addObject:[YouModMenuItem itemWithTitle:format.title subtitle:YouModAudioOutputSubtitle(format) icon:YouModIconImage(21) handler:^{
-            YouModShowAudioSourceSheet(player, format, presenter, sender);
-        }]];
-    }
-    YouModPresentMenu(LOC(@"AUDIO_FORMAT"), items, presenter, sender);
+    YouModAudioOutputFormat *defaultFormat = YouModDefaultAudioOutputFormat();
+    YouModShowAudioSourceSheet(player, defaultFormat, presenter, sender);
 }
 
 static void YouModShowCaptionsSheet(YTPlayerViewController *player, UIViewController *presenter, UIView *sender) {
@@ -1949,11 +1931,6 @@ static void YouModShowDownloadManager(YTPlayerViewController *player, UIViewCont
     [items addObject:[YouModMenuItem itemWithTitle:LOC(@"DOWNLOAD_CAPTIONS") subtitle:LOC(@"DOWNLOAD_CAPTIONS_DESC") icon:YouModIconImage(637) handler:^{
         YouModShowCaptionsSheet(player, presenter, sender);
     }]];
-    /*
-    [items addObject:[YouModMenuItem itemWithTitle:@"Copy diagnostics" subtitle:@"Copy last error log" icon:YouModIconImage(870) handler:^{
-        YouModCopyDownloadDiagnostics(presenter);
-    }]];
-    */
     [items addObject:[YouModMenuItem itemWithTitle:LOC(@"SAVE_THUMBNAIL") subtitle:LOC(@"SAVE_THUMBNAIL_DESC") icon:YouModIconImage(367) handler:^{
         YouModDownloadThumbnail(videoID, presenter);
     }]];

@@ -588,9 +588,9 @@ YMSettingsItem *YMImageSegment(NSString *title, NSString *key, NSArray<UIImage *
 
 static NSString * const kYMTabIDs[] = {
     @"home", @"shorts", @"create", @"subscriptions", @"library",
-    @"history", @"gaming", @"sports", @"notifications"
+    @"history", @"gaming", @"sports", @"notifications", @"news"
 };
-static const NSInteger kYMTabCount = 9;
+static const NSInteger kYMTabCount = 10;
 static const NSInteger kYMTabMaxEnabled = 6;
 
 @interface YMTabOrderViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
@@ -625,6 +625,7 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
     if ([tabID isEqualToString:@"gaming"]) return YMLOC(@"GAMING_TAB");
     if ([tabID isEqualToString:@"sports"]) return YMLOC(@"SPORTS_TAB");
     if ([tabID isEqualToString:@"notifications"]) return YMLOC(@"NOTI_TAB");
+    if ([tabID isEqualToString:@"news"]) return YMLOC(@"NEWS_TAB");
     return tabID;
 }
 
@@ -723,7 +724,7 @@ static const void *kYMTabSnapshotKey = &kYMTabSnapshotKey;
     } else {
         // Default: Home, Shorts, Create, Subscriptions, Library enabled
         for (NSInteger i = 0; i < kYMTabCount; i++) {
-            BOOL defaultEnabled = (i < 5);
+            BOOL defaultEnabled = (i < 5 && i != 2);
             [data addObject:[@{@"id": kYMTabIDs[i], @"enabled": @(defaultEnabled)} mutableCopy]];
         }
     }

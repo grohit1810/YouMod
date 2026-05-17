@@ -53,6 +53,7 @@ This project uses GPLv3 license. See [LICENSE](https://github.com/Tonwalter888/Y
 - [daisuke1227](https://github.com/daisuke1227) - Implementing download features and others
 - [grohit1810](https://github.com/grohit1810) - Implementing built-in SponsorBlock, whole new settings logic, and others
 - [SponsorBlock](https://sponsor.ajay.app) - SponsorBlock segments API
+- [Google Fonts](https://fonts.google.com/icons) - Icons for custom tabs
 - And [PoomSmart](https://github.com/PoomSmart)'s tweaks
 
 Also thanks to all the contributors in the past!

@@ -342,7 +342,7 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
     YTSettingsSectionItem *tabgroup = [YTSettingsSectionItemClass itemWithTitle:LOC(@"TABBAR") accessibilityIdentifier:nil detailTextBlock:nil selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
         // Build dynamic image list from enabled tabs (standard + custom)
         NSDictionary *tabYTIconMap = @{@"home": @(65), @"shorts": @(769), @"subscriptions": @(66), @"library": @(61)};
-        NSDictionary *tabBundleIconMap = @{@"history": @"icons/history", @"gaming": @"icons/gaming", @"sports": @"icons/sports", @"notifications": @"icons/noti"};
+        NSDictionary *tabBundleIconMap = @{@"history": @"icons/history", @"gaming": @"icons/gaming", @"sports": @"icons/sports", @"notifications": @"icons/noti", @"news": @"icons/news"};
         NSBundle *ymBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
         YTAssetLoader *assetLoader = [[%c(YTAssetLoader) alloc] initWithBundle:ymBundle];
 
@@ -363,7 +363,10 @@ static NSString *GetCacheSize() { // YTLite - @dayanch96
                     NSString *bundleName = tabBundleIconMap[tabID];
                     if (bundleName) {
                         UIImage *img = [assetLoader imageNamed:bundleName];
-                        if (img) [defaultTabImages addObject:img];
+                        if (img) {
+                            UIImage *whiteImg = [img imageWithTintColor:[UIColor whiteColor] renderingMode:UIImageRenderingModeAlwaysOriginal];
+                            [defaultTabImages addObject:whiteImg];
+                        }
                     }
                 }
             }
