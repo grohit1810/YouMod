@@ -1,6 +1,8 @@
 #import "Headers.h"
 #import <AudioToolbox/AudioToolbox.h>
 
+BOOL useBackwardIconForButton = NO;
+
 @interface SBPassthroughView : UIView
 @end
 @implementation SBPassthroughView
@@ -327,6 +329,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
     }
 
     if (IS_ENABLED(SBShowNotifications)) {
+        useBackwardIconForButton = YES;
         NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
         NSString *catName = [bundle localizedStringForKey:[NSString stringWithFormat:@"SB_CAT_%@", segment.category] value:segment.category table:nil];
         NSString *message = [NSString stringWithFormat:[bundle localizedStringForKey:@"SB_SKIPPED" value:@"%@ skipped" table:nil], catName];
@@ -358,6 +361,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
 - (void)sbShowAskNotification:(SBSegment *)segment {
     [self.sbSkippedSegments addObject:segment.UUID];
 
+    useBackwardIconForButton = NO;
     NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
     NSString *catName = [bundle localizedStringForKey:[NSString stringWithFormat:@"SB_CAT_%@", segment.category] value:segment.category table:nil];
     NSString *message = [NSString stringWithFormat:[bundle localizedStringForKey:@"SB_DETECTED" value:@"%@ detected" table:nil], catName];
@@ -381,6 +385,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
 - (void)sbShowHighlightBannerIfNeeded:(NSArray<SBSegment *> *)segments {
     for (SBSegment *seg in segments) {
         if ([seg.category isEqualToString:@"poi_highlight"] && [seg configuredAction] == SBSegmentActionSkipTo) {
+            useBackwardIconForButton = NO;
             NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
             NSString *message = [bundle localizedStringForKey:@"SB_JUMP_TO_HIGHLIGHT" value:@"Highlight available. Jump to the point?" table:nil];
             NSString *skipTitle = [bundle localizedStringForKey:@"SB_SKIP_NOW" value:@"Skip" table:nil];
@@ -413,6 +418,7 @@ UIColor *SBColorFromHex(NSString *hexString) {
             [self seekToTime:(CGFloat)segment.startTime];
 
             if (IS_ENABLED(SBShowNotifications)) {
+                useBackwardIconForButton = YES;
                 NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"YouMod" ofType:@"bundle"]];
                 NSString *message = [bundle localizedStringForKey:@"SB_JUMPED_TO_HIGHLIGHT" value:@"Jumped to highlight" table:nil];
                 NSString *unskipTitle = [bundle localizedStringForKey:@"SB_UNSKIP" value:@"Unskip" table:nil];

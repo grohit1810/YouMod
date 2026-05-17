@@ -1,6 +1,8 @@
 #import "Headers.h"
 #import <objc/message.h>
 
+extern BOOL useBackwardIconForButton;
+
 static NSBundle *SBUIBundle() {
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
@@ -68,11 +70,7 @@ static NSBundle *SBUIBundle() {
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.translatesAutoresizingMaskIntoConstraints = NO;
 
-        NSString *iconName = @"forward.end.fill";
-        if (buttonTitle && ([buttonTitle.lowercaseString containsString:@"unskip"] || [buttonTitle.lowercaseString containsString:@"back"])) {
-            iconName = @"backward.fill";
-        }
-
+        NSString *iconName = useBackwardIconForButton ? @"backward.fill" : @"forward.end.fill";
         UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:14 weight:UIImageSymbolWeightMedium];
         UIImage *icon = [UIImage systemImageNamed:iconName withConfiguration:config];
         [button setImage:icon forState:UIControlStateNormal];
