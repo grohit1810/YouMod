@@ -354,13 +354,13 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
 
 %hook YTPlayerViewController
 - (void)playbackController:(id)arg1 didActivateVideo:(id)arg2 withPlaybackData:(id)arg3 {
+    %orig;
     YouModDownloadSetCurrentPlayer(self);
     if (IS_ENABLED(AutoFullScreen)) [self performSelector:@selector(YouModAutoFullscreen)];
     if (IS_ENABLED(ShortsToRegular)) [self performSelector:@selector(YouModShortsToRegular)];
     if (IS_ENABLED(DisablesCaptions)) [self performSelector:@selector(YouModTurnOffCaptions)];
     if (INTFORVAL(AutoSpeedIndex) != 0) [self performSelector:@selector(YouModSetAutoSpeed)];
     if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [self performSelector:@selector(YouModAutoQuality)];
-    %orig;
 }
 
 // - (void)loadWithPlayerPlayback:(id)arg
