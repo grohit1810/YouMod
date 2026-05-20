@@ -8,7 +8,8 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     // if (!IS_ENABLED(ShowExtraTimeRemaining)) return;
 
     CGFloat rate = playbackRate != 0 ? playbackRate : 1.0;
-    NSTimeInterval remainingTime = (lround(video.totalMediaTime) - lround(time.time)) / rate;
+    NSTimeInterval remainingTimetext = (lround(video.totalMediaTime) - lround(time.time)) / rate;
+    NSString *remainingTime = remainingTimetext;
 
     // NSDate *estimatedEndTime = [NSDate dateWithTimeIntervalSinceNow:remainingTime];
 
