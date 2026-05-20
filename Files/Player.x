@@ -3,7 +3,6 @@
 extern void YouModDownloadSetCurrentPlayer(YTPlayerViewController *player);
 
 static float playbackRate = 1.0;
-static NSString *vidID;
 
 /*
 static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoController *video, YTSingleVideoTime *time) {
