@@ -10,14 +10,16 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     CGFloat rate = playbackRate != 0 ? playbackRate : 1.0;
     NSTimeInterval remainingTime = (lround(video.totalMediaTime) - lround(time.time)) / rate;
 
-    NSDate *estimatedEndTime = [NSDate dateWithTimeIntervalSinceNow:remainingTime];
+    // NSDate *estimatedEndTime = [NSDate dateWithTimeIntervalSinceNow:remainingTime];
 
+    /*
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [dateFormatter setDateFormat:@"HH:mm"];
     // [dateFormatter setDateFormat:ytlBool(@"24hrFormat") ? @"HH:mm" : @"h:mm a"];
+    */
 
-    NSString *formattedEndTime = [dateFormatter stringFromDate:estimatedEndTime];
+    // NSString *formattedEndTime = [dateFormatter stringFromDate:estimatedEndTime];
 
     YTPlayerView *playerView = (YTPlayerView *)self.playerView;
     if (![playerView.overlayView isKindOfClass:%c(YTMainAppVideoPlayerOverlayView)]) return;
@@ -25,8 +27,8 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     YTMainAppVideoPlayerOverlayView *overlay = (YTMainAppVideoPlayerOverlayView*)playerView.overlayView;
     YTLabel *durationLabel = overlay.playerBar.durationLabel;
 
-    if (![durationLabel.text containsString:formattedEndTime]) {
-        durationLabel.text = [durationLabel.text stringByAppendingString:[NSString stringWithFormat:@" • %@", formattedEndTime]];
+    if (![durationLabel.text containsString:remainingTime]) {
+        durationLabel.text = [durationLabel.text stringByAppendingString:[NSString stringWithFormat:@" • %@", remainingTime]];
         [durationLabel sizeToFit];
     }
 }
