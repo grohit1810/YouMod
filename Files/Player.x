@@ -8,12 +8,26 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     // if (!IS_ENABLED(ShowExtraTimeRemaining)) return;
 
     CGFloat rate = playbackRate != 0 ? playbackRate : 1.0;
+    NSTimeInterval remainingSeconds = (lround(video.totalMediaTime) - lround(time.time)) / rate;
+
+    int hours = (int)(remainingSeconds / 3600);
+    int minutes = (int)(((int)remainingSeconds % 3600) / 60);
+    int seconds = (int)((int)remainingSeconds % 60);
+
+    NSString *remainingTimeText;
+    if (hours > 0) {
+        remainingTimeText = [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
+    } else {
+        remainingTimeText = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    }
+    
+    /*
+    CGFloat rate = playbackRate != 0 ? playbackRate : 1.0;
     NSTimeInterval remainingTimetext = (lround(video.totalMediaTime) - lround(time.time)) / rate;
     NSString *remainingTime = remainingTimetext;
 
     // NSDate *estimatedEndTime = [NSDate dateWithTimeIntervalSinceNow:remainingTime];
 
-    /*
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [dateFormatter setDateFormat:@"HH:mm"];
@@ -28,8 +42,8 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     YTMainAppVideoPlayerOverlayView *overlay = (YTMainAppVideoPlayerOverlayView*)playerView.overlayView;
     YTLabel *durationLabel = overlay.playerBar.durationLabel;
 
-    if (![durationLabel.text containsString:remainingTime]) {
-        durationLabel.text = [durationLabel.text stringByAppendingString:[NSString stringWithFormat:@" • %@", remainingTime]];
+    if (![durationLabel.text containsString:remainingTimeText]) {
+        durationLabel.text = [durationLabel.text stringByAppendingString:[NSString stringWithFormat:@" • %@", remainingTimeText]];
         [durationLabel sizeToFit];
     }
 }
