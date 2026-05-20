@@ -4,9 +4,8 @@ extern void YouModDownloadSetCurrentPlayer(YTPlayerViewController *player);
 
 static float playbackRate = 1.0;
 
-/*
 static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoController *video, YTSingleVideoTime *time) {
-    if (!IS_ENABLED(ShowExtraTimeRemaining)) return;
+    // if (!IS_ENABLED(ShowExtraTimeRemaining)) return;
 
     CGFloat rate = playbackRate != 0 ? playbackRate : 1.0;
     NSTimeInterval remainingTime = (lround(video.totalMediaTime) - lround(time.time)) / rate;
@@ -20,19 +19,17 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
 
     NSString *formattedEndTime = [dateFormatter stringFromDate:estimatedEndTime];
 
-    YTPlayerView *playerView = (YTPlayerView *)self.view;
+    YTPlayerView *playerView = (YTPlayerView *)self.playerView;
     if (![playerView.overlayView isKindOfClass:%c(YTMainAppVideoPlayerOverlayView)]) return;
 
     YTMainAppVideoPlayerOverlayView *overlay = (YTMainAppVideoPlayerOverlayView*)playerView.overlayView;
     YTLabel *durationLabel = overlay.playerBar.durationLabel;
-    overlay.playerBar.endTimeString = formattedEndTime;
 
     if (![durationLabel.text containsString:formattedEndTime]) {
         durationLabel.text = [durationLabel.text stringByAppendingString:[NSString stringWithFormat:@" • %@", formattedEndTime]];
         [durationLabel sizeToFit];
     }
 }
-*/
 
 %hook YTMainAppControlsOverlayView
 // Hide autoplay Switch
@@ -454,7 +451,6 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
     }
 }
 
-/*
 - (void)singleVideo:(YTSingleVideoController *)video currentVideoTimeDidChange:(YTSingleVideoTime *)time {
     %orig;
     YouModAddEndTime(self, video, time);
@@ -464,7 +460,6 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
     %orig;
     YouModAddEndTime(self, video, time);
 }
-*/
 
 - (void)setPlaybackRate:(float)rate {
     playbackRate = rate;
