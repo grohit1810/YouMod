@@ -182,6 +182,15 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
             playerBar.shouldDisplayTimeRemaining = YES;
         }
     }
+    YTSingleVideoController *sgvid = [self valueForKey:@"_currentSingleVideo"];
+    YTPlayerView *playerview = [sgvid valueForKey:@"_playerView"];
+    YTPlayerViewController *playerviewController = [playerview valueForKey:@"_playerViewDelegate"];
+    YouModDownloadSetCurrentPlayer(playerviewController);
+    if (IS_ENABLED(AutoFullScreen)) [playerviewController performSelector:@selector(YouModAutoFullscreen)];
+    if (IS_ENABLED(ShortsToRegular)) [playerviewController performSelector:@selector(YouModShortsToRegular)];
+    if (IS_ENABLED(DisablesCaptions)) [playerviewController performSelector:@selector(YouModTurnOffCaptions)];
+    if (INTFORVAL(AutoSpeedIndex) != 0) [playerviewController performSelector:@selector(YouModSetAutoSpeed)];
+    if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [playerviewController performSelector:@selector(YouModAutoQuality)];
 }
 %end
 
@@ -366,6 +375,7 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
 }
 %end
 
+/*
 %hook YTSingleVideoController
 - (void)setDelegate:(id)arg {
     %orig;
@@ -379,6 +389,7 @@ static void YouModManageHoldToSpeed(UILongPressGestureRecognizer *gesture, YTMai
     if (INTFORVAL(WifiQualityIndex) != 0 || INTFORVAL(CellQualityIndex) != 0) [playerviewController performSelector:@selector(YouModAutoQuality)];
 }
 %end
+*/
 
 %hook YTPlayerViewController
 
